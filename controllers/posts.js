@@ -4,8 +4,67 @@ const ErrorResponse = require("../utils/errorResponse");
 // GET All
 module.exports.getPosts = async (req, res) => {
   try {
-    const posts = await Post.find();
-    res.status(200).json({ success: true, data: posts });
+    // Handle input queries
+    // let queryStr = JSON.stringify(req.query);
+    const requestQuery = { ...req.query };
+    const omitFields = ["select", "sort", "limit", "page"];
+
+    omitFields.forEach((field) => {
+      if (requestQuery[field]) {
+        delete requestQuery[field];
+      }
+    });
+    let queryStr = JSON.stringify(requestQuery);
+
+    // handle mongoose $gt, $gte, $lt, $lte, $in
+    queryStr = queryStr.replace(
+      /\b(gt|gte|lt|lte|in)\b/g,
+      (match) => `$${match}`
+    );
+    let query = Post.find(JSON.parse(queryStr));
+
+    //Select
+    if (req.query.select) {
+      const flds = req.query.select.split(",").join(" ");
+      query = query.select(flds);
+    }
+    //Sort
+    if (req.query.sort) {
+      const flds = req.query.sort.split(",").join(" ");
+      query = query.sort(flds);
+    } else {
+      query = query.sort("-createdAt");
+    }
+
+    //Pagination
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5; // per page
+    const startIdx = (page - 1) * limit;
+    const endIndex = page * limit;
+    // const total = await Post.countDocuments();
+    const data = await query;
+    const total = data.length;
+    const totalPage = Math.round(total / limit);
+
+    query = query.skip(startIdx).limit(limit);
+    // pagination result
+    const pagination = { totalPage };
+    if (endIndex < total) {
+      pagination.next = {
+        page: page + 1,
+        limit,
+      };
+    }
+    if (startIdx > 0) {
+      pagination.prev = {
+        page: page - 1,
+        limit,
+      };
+    }
+    const posts = await query;
+    res
+      .status(200)
+      .json({ success: true, data: posts, count: posts.length, pagination });
   } catch (error) {
     res.status(400).json({ success: false });
   }
@@ -20,7 +79,6 @@ module.exports.getPost = async (req, res, next) => {
     }
     res.status(400).json({ success: false });
   } catch (error) {
-    console.log(`${error}`.red);
     next(new ErrorResponse(`Bootcamp ID ${req.params.id} not found`, 404));
   }
 };
@@ -47,7 +105,6 @@ module.exports.updatePost = async (req, res, next) => {
     }
     res.status(400).json({ success: false });
   } catch (error) {
-    console.log(`${error}`.red);
     next(new ErrorResponse(`Bootcamp ID ${req.params.id} not found`, 404));
   }
 };
@@ -61,7 +118,6 @@ module.exports.deletePost = async (req, res, next) => {
     }
     res.status(400).json({ success: false });
   } catch (error) {
-    console.log(`${error}`.red);
     next(new ErrorResponse(`Bootcamp ID ${req.params.id} not found`, 404));
   }
 };

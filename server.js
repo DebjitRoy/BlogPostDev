@@ -2,6 +2,8 @@ const express = require("express");
 const dotenv = require("dotenv");
 const colors = require("colors");
 
+const errorHandler = require("./middlewares/error");
+
 const connectDB = require("./config/db");
 dotenv.config({ path: "./config/config.env" });
 
@@ -18,6 +20,8 @@ const app = express();
 app.use(express.json()); // adds json-parser
 
 app.use("/api/posts", postsRoute);
+
+app.use(errorHandler);
 
 app.listen(
   PORT,

@@ -14,6 +14,11 @@ const PostSchema = new mongoose.Schema({
     enum: ["travel", "books", "miscl"],
     required: [true, "Please add a Post Type"],
   },
+  gist: {
+    type: String,
+    required: [true, "Please add a Post short description"],
+    maxlength: [500, "Short description can't be more than 500 characters"],
+  },
   createdAt: {
     type: Date,
     default: Date.now,
@@ -37,6 +42,10 @@ const PostSchema = new mongoose.Schema({
   content: {
     type: [Section],
     required: [true, "Post should have a body"],
+  },
+  searchBy: {
+    type: [String],
+    required: [true, "Post should contain search strings"],
   },
 });
 
