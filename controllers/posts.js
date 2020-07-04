@@ -1,3 +1,4 @@
+const path = require("path");
 const Post = require("../models/Post");
 const ErrorResponse = require("../utils/errorResponse");
 
@@ -70,6 +71,26 @@ module.exports.getPosts = async (req, res) => {
   }
 };
 
+// Get Count Data
+module.exports.getPostsCount = async (req, res) => {
+  try {
+    let query = Post.find();
+    const posts = await query;
+    const travelPost = await Post.find({ postType: "travel" });
+    const booksPost = await Post.find({ postType: "books" });
+    const misclPost = await Post.find({ postType: "miscl" });
+    res.status(200).json({
+      success: true,
+      count: posts.length,
+      travelcount: travelPost.length,
+      bookcount: booksPost.length,
+      misclcount: misclPost.length,
+    });
+  } catch (err) {
+    res.status(400).json({ success: false });
+  }
+};
+
 // GET Single
 module.exports.getPost = async (req, res, next) => {
   try {
@@ -120,4 +141,46 @@ module.exports.deletePost = async (req, res, next) => {
   } catch (error) {
     next(new ErrorResponse(`Bootcamp ID ${req.params.id} not found`, 404));
   }
+};
+
+// Upload Photo
+module.exports.uploadPhotoPost = async (req, res, next) => {
+  const post = await Post.findById(req.params.id);
+  if (!post) {
+    return next(
+      new ErrorResponse(`Bootcamp ID ${req.params.id} not found`, 404)
+    );
+  }
+  if (!req.files) {
+    return next(new ErrorResponse(`Please upload file`, 400));
+  }
+  const file = req.files.file;
+
+  if (!file.mimetype.startsWith("image/")) {
+    return next(new ErrorResponse(`Please upload an image`, 400));
+  }
+
+  if (file.size > process.env.MAX_FILE_UPLOAD) {
+    return next(
+      new ErrorResponse(
+        `File size bigger than ${process.env.MAX_FILE_UPLOAD}`,
+        400
+      )
+    );
+  }
+
+  // create filename
+  file.name = `photo_${post._id}${path.parse(file.name).ext}`;
+
+  file.mv(`${process.env.FILE_UPLOAD_PATH}/${file.name}`, async (err) => {
+    if (err) {
+      return next(new ErrorResponse(`Error upload an image`, 500));
+    }
+    await Post.findByIdAndUpdate(req.params.id, { photoHero: file.name });
+
+    res.status(200).json({
+      success: true,
+      data: file.name,
+    });
+  });
 };

@@ -1,6 +1,8 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const colors = require("colors");
+const fileupload = require("express-fileupload");
+const path = require("path");
 
 const errorHandler = require("./middlewares/error");
 
@@ -18,6 +20,12 @@ const app = express();
 
 // Body Parser
 app.use(express.json()); // adds json-parser
+
+// uploading image
+app.use(fileupload());
+
+//setting folder static to be accessible from browser
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/api/posts", postsRoute);
 
