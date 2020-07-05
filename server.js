@@ -1,8 +1,11 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const colors = require("colors");
-const fileupload = require("express-fileupload");
+const multer = require("multer");
+// const fileupload = require("express-fileupload");
 const path = require("path");
+
+// const profile = require("./routes/test");
 
 const errorHandler = require("./middlewares/error");
 
@@ -21,8 +24,9 @@ const app = express();
 // Body Parser
 app.use(express.json()); // adds json-parser
 
+// app.use("/api/profile", profile);
 // uploading image
-app.use(fileupload());
+// app.use(fileupload());
 
 //setting folder static to be accessible from browser
 app.use(express.static(path.join(__dirname, "public")));

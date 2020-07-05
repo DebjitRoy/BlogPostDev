@@ -1,4 +1,8 @@
 const path = require("path");
+const aws = require("aws-sdk");
+const multerS3 = require("multer-s3");
+const multer = require("multer");
+const url = require("url");
 const Post = require("../models/Post");
 const ErrorResponse = require("../utils/errorResponse");
 
@@ -144,6 +148,50 @@ module.exports.deletePost = async (req, res, next) => {
 };
 
 // Upload Photo
+
+const s3 = new aws.S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  Bucket: process.env.S3_BUCKET_NAME,
+});
+
+/**
+ * Single Upload
+ */
+// `photo_${post._id}${path.parse(file.name).ext}`
+const imgUpload = (post) =>
+  multer({
+    storage: multerS3({
+      s3: s3,
+      bucket: process.env.S3_BUCKET_NAME,
+      acl: "public-read",
+      key: function (req, file, cb) {
+        console.log("INSIDE MULTER: " + JSON.stringify(file));
+        cb(null, `photo_${post._id}${path.extname(file.originalname)}`);
+      },
+    }),
+    limits: { fileSize: process.env.MAX_FILE_UPLOAD }, // In bytes: 2000000 bytes = 2 MB
+    fileFilter: function (req, file, cb) {
+      checkFileType(file, cb);
+    },
+  }).single("file");
+
+function checkFileType(file, cb) {
+  // Allowed ext
+  const filetypes = /jpeg|jpg|png/;
+  // Check ext
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  // Check mime
+  const mimetype = filetypes.test(file.mimetype);
+  if (mimetype && extname) {
+    return cb(null, true);
+  } else {
+    cb("Error: Images Only!");
+  }
+}
+
+//image url
+//https://bengali-blog-static-uploads.s3.amazonaws.com/photo-name
 module.exports.uploadPhotoPost = async (req, res, next) => {
   const post = await Post.findById(req.params.id);
   if (!post) {
@@ -151,36 +199,75 @@ module.exports.uploadPhotoPost = async (req, res, next) => {
       new ErrorResponse(`Bootcamp ID ${req.params.id} not found`, 404)
     );
   }
-  if (!req.files) {
-    return next(new ErrorResponse(`Please upload file`, 400));
-  }
-  const file = req.files.file;
-
-  if (!file.mimetype.startsWith("image/")) {
-    return next(new ErrorResponse(`Please upload an image`, 400));
-  }
-
-  if (file.size > process.env.MAX_FILE_UPLOAD) {
-    return next(
-      new ErrorResponse(
-        `File size bigger than ${process.env.MAX_FILE_UPLOAD}`,
-        400
-      )
-    );
-  }
-
-  // create filename
-  file.name = `photo_${post._id}${path.parse(file.name).ext}`;
-
-  file.mv(`${process.env.FILE_UPLOAD_PATH}/${file.name}`, async (err) => {
-    if (err) {
-      return next(new ErrorResponse(`Error upload an image`, 500));
+  imgUpload(post)(req, res, (error) => {
+    // console.log("requestOkokok", req.file);
+    // console.log("error", error);
+    if (error) {
+      console.log("errors", error);
+      // res.json({ error: error });
+      return next(new ErrorResponse(`${error.message}`, 400));
+    } else {
+      // If File not found
+      if (req.file === undefined) {
+        console.log("Error: No File Selected!");
+        // res.json("Error: No File Selected");
+        return next(new ErrorResponse(`Please upload file`, 400));
+      } else {
+        // If Success
+        const imageName = req.file.key;
+        const imageLocation = req.file.location;
+        Post.findByIdAndUpdate(post._id, { photoHero: imageName }).then(() => {
+          res.json({
+            image: imageName,
+            location: imageLocation,
+          });
+        });
+        // Save the file name into database into profile model
+      }
     }
-    await Post.findByIdAndUpdate(req.params.id, { photoHero: file.name });
-
-    res.status(200).json({
-      success: true,
-      data: file.name,
-    });
   });
+  // console.log("UPLD:" + upld);
+  // await Post.findByIdAndUpdate(req.params.id, { photoHero: imageLocation });
 };
+
+// File Upload to local store
+// module.exports.uploadPhotoPost = async (req, res, next) => {
+//   const post = await Post.findById(req.params.id);
+//   if (!post) {
+//     return next(
+//       new ErrorResponse(`Bootcamp ID ${req.params.id} not found`, 404)
+//     );
+//   }
+//   if (!req.files) {
+//     return next(new ErrorResponse(`Please upload file`, 400));
+//   }
+//   const file = req.files.file;
+
+//   if (!file.mimetype.startsWith("image/")) {
+//     return next(new ErrorResponse(`Please upload an image`, 400));
+//   }
+
+//   if (file.size > process.env.MAX_FILE_UPLOAD) {
+//     return next(
+//       new ErrorResponse(
+//         `File size bigger than ${process.env.MAX_FILE_UPLOAD}`,
+//         400
+//       )
+//     );
+//   }
+
+//   // create filename
+//   file.name = `photo_${post._id}${path.parse(file.name).ext}`;
+
+//   file.mv(`${process.env.FILE_UPLOAD_PATH}/${file.name}`, async (err) => {
+//     if (err) {
+//       return next(new ErrorResponse(`Error upload an image`, 500));
+//     }
+//     await Post.findByIdAndUpdate(req.params.id, { photoHero: file.name });
+
+//     res.status(200).json({
+//       success: true,
+//       data: file.name,
+//     });
+//   });
+// };

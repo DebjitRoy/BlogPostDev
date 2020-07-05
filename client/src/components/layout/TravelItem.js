@@ -10,7 +10,7 @@ const TravelItem = ({ data }) => (
           <a href="#">
             <img
               className="img-fluid rounded"
-              src={`/uploads/photo_${data._id}.jpg`}
+              src={`https://bengali-blog-static-uploads.s3.amazonaws.com/${data.photoHero}`}
               alt=""
             />
           </a>

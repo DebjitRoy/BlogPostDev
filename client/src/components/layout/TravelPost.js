@@ -34,7 +34,8 @@ const TravelPost = (props) => {
               <div className="col-lg-8">
                 <img
                   className="img-fluid rounded"
-                  src={`/uploads/${postState.data.photoHero}`}
+                  // src={`/uploads/${postState.data.photoHero}`}
+                  src={`https://bengali-blog-static-uploads.s3.amazonaws.com/${postState.data.photoHero}`}
                   alt=""
                 />
 
