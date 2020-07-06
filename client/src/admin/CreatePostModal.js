@@ -110,13 +110,13 @@ const CreatePostModal = ({ isOpen, closeModal }) => {
       }
 
       if (Object.keys(sectionImages).length > 0) {
-        for (let section in Object.keys(sectionImages)) {
+        for (let section of Object.keys(sectionImages)) {
           const sectionId = res.data.data.content[parseInt(section)]._id;
           const fd = new FormData();
           fd.append(
             "file",
-            sectionImages[section],
-            sectionImages[section].name
+            sectionImages[parseInt(section)],
+            sectionImages[parseInt(section)].name
           );
           await axios.put(
             `/api/posts/${createdPostId}/sectionupload/${sectionId}`,
