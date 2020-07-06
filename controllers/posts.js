@@ -4,6 +4,7 @@ const multerS3 = require("multer-s3");
 const multer = require("multer");
 const url = require("url");
 const Post = require("../models/Post");
+const Section = require("../models/Section");
 const ErrorResponse = require("../utils/errorResponse");
 
 // GET All
@@ -111,10 +112,12 @@ module.exports.getPost = async (req, res, next) => {
 // CREATE/POST
 module.exports.createPost = async (req, res) => {
   try {
+    // console.log(body);
     const post = await Post.create(req.body);
+    // console.log(post);
     res.status(200).json({ success: true, data: post });
   } catch (error) {
-    res.status(400).json({ success: false });
+    res.status(400).json({ success: false, err: error });
   }
 };
 
@@ -159,15 +162,22 @@ const s3 = new aws.S3({
  * Single Upload
  */
 // `photo_${post._id}${path.parse(file.name).ext}`
-const imgUpload = (post) =>
+const imgUpload = (post, sectionid) =>
   multer({
     storage: multerS3({
       s3: s3,
       bucket: process.env.S3_BUCKET_NAME,
       acl: "public-read",
       key: function (req, file, cb) {
-        console.log("INSIDE MULTER: " + JSON.stringify(file));
-        cb(null, `photo_${post._id}${path.extname(file.originalname)}`);
+        // console.log("INSIDE MULTER: " + JSON.stringify(file));
+        if (sectionid) {
+          cb(
+            null,
+            `photo_${post._id}-${sectionid}${path.extname(file.originalname)}`
+          );
+        } else {
+          cb(null, `photo_${post._id}${path.extname(file.originalname)}`);
+        }
       },
     }),
     limits: { fileSize: process.env.MAX_FILE_UPLOAD }, // In bytes: 2000000 bytes = 2 MB
@@ -222,6 +232,64 @@ module.exports.uploadPhotoPost = async (req, res, next) => {
             location: imageLocation,
           });
         });
+        // Save the file name into database into profile model
+      }
+    }
+  });
+  // console.log("UPLD:" + upld);
+  // await Post.findByIdAndUpdate(req.params.id, { photoHero: imageLocation });
+};
+
+// Section Upload
+module.exports.uploadSectionPhoto = async (req, res, next) => {
+  const post = await Post.findById(req.params.id);
+  if (!post) {
+    return next(
+      new ErrorResponse(`Bootcamp ID ${req.params.id} not found`, 404)
+    );
+  }
+  imgUpload(post, req.params.sectionid)(req, res, (error) => {
+    // console.log("requestOkokok", req.file);
+    // console.log("error", error);
+    if (error) {
+      console.log("errors", error);
+      // res.json({ error: error });
+      return next(new ErrorResponse(`${error.message}`, 400));
+    } else {
+      // If File not found
+      if (req.file === undefined) {
+        console.log("Error: No File Selected!");
+        // res.json("Error: No File Selected");
+        return next(new ErrorResponse(`Please upload file`, 400));
+      } else {
+        // If Success
+        const imageName = req.file.key;
+        const imageLocation = req.file.location;
+        const updatedContent = [];
+        post.content.forEach((section) => {
+          // console.log(section, req.params.sectionid);
+          if (section._id.toString() === req.params.sectionid) {
+            section.image = imageName;
+          }
+          updatedContent.push(section);
+        });
+        // console.log(updatedContent);
+        Post.findByIdAndUpdate(post._id, { content: updatedContent }).then(
+          () => {
+            res.json({
+              image: imageName,
+              location: imageLocation,
+            });
+          }
+        );
+        // Section.findByIdAndUpdate(req.params.sectionid, {
+        //   image: imageName,
+        // }).then(() => {
+        //   res.json({
+        //     image: imageName,
+        //     location: imageLocation,
+        //   });
+        // });
         // Save the file name into database into profile model
       }
     }

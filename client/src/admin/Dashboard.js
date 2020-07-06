@@ -7,6 +7,7 @@ const AdminDashboard = () => {
   const [latestPosts, changePostData] = useState(null);
   const [countData, changeCounts] = useState(null);
   const [selectedPostType, changeSelectedType] = useState("all");
+  const [isCreateModalOpen, changeModalOpen] = useState(false);
   const selectedCategory = {
     all: "All Posts",
     travel: "Travel Posts",
@@ -14,27 +15,48 @@ const AdminDashboard = () => {
     miscl: "Miscl Posts",
   };
   useEffect(() => {
-    (async () => {
-      try {
-        const res = await axios.get(
-          "/api/posts?limit=25&select=title,postType,postType,createdAt"
-        );
-        changePostData(res.data.data);
+    getRecentPosts();
+    // (async () => {
+    //   // try {
+    //   //   const res = await axios.get(
+    //   //     "/api/posts?limit=25&select=title,postType,postType,createdAt"
+    //   //   );
+    //   //   changePostData(res.data.data);
 
-        const countVal = await axios.get("/api/posts/count");
-        const { count, travelcount, bookcount, misclcount } = countVal.data;
-        console.log(countVal);
-        changeCounts({
-          count,
-          travelcount,
-          bookcount,
-          misclcount,
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, []);
+    //   //   const countVal = await axios.get("/api/posts/count");
+    //   //   const { count, travelcount, bookcount, misclcount } = countVal.data;
+    //   //   console.log(countVal);
+    //   //   changeCounts({
+    //   //     count,
+    //   //     travelcount,
+    //   //     bookcount,
+    //   //     misclcount,
+    //   //   });
+    //   // } catch (error) {
+    //   //   console.log(error);
+    //   // }
+    // })();
+  }, [isCreateModalOpen]);
+  const getRecentPosts = async () => {
+    try {
+      const res = await axios.get(
+        "/api/posts?limit=25&select=title,postType,postType,createdAt"
+      );
+      changePostData(res.data.data);
+
+      const countVal = await axios.get("/api/posts/count");
+      const { count, travelcount, bookcount, misclcount } = countVal.data;
+      console.log(countVal);
+      changeCounts({
+        count,
+        travelcount,
+        bookcount,
+        misclcount,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const postTypeSelected = async (postType) => {
     try {
       let res = null;
@@ -53,29 +75,36 @@ const AdminDashboard = () => {
       console.log(err);
     }
   };
+  const deletePost = async (id) => {
+    try {
+      const res = await axios.delete(`/api/posts/${id}`);
+      getRecentPosts();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <Fragment>
       <section id="actions" className="py-4 mb-4 bg-light">
         <div className="container">
           <div className="row">
             <div className="col-md-3">
-              <a
-                href="#"
+              <div
                 className="btn btn-primary btn-block"
-                data-toggle="modal"
-                data-target="#addPostModal"
+                // data-toggle="modal"
+                // data-target="#addPostModal"
+                onClick={() => changeModalOpen(true)}
               >
                 <i className="fas fa-plus"></i> Add Post
-              </a>
+              </div>
             </div>
             <div className="col-md-3">
-              <a
-                href="#"
+              <div
                 className="btn btn-success btn-block dropdown-toggle"
                 data-toggle="dropdown"
               >
                 {selectedCategory[selectedPostType]}
-              </a>
+              </div>
               <div className="dropdown-menu">
                 <a
                   className="dropdown-item"
@@ -153,13 +182,19 @@ const AdminDashboard = () => {
                           <td>{post.postType}</td>
                           <td>{moment(post.createdAt).format("DD-MM-YYYY")}</td>
                           <td>
-                            <a
-                              href="details.html"
-                              className="btn btn-secondary"
-                            >
-                              <i className="fas fa-angle-double-right"></i>{" "}
-                              Details
-                            </a>
+                            <div className="row">
+                              <a
+                                href="details.html"
+                                className="btn btn-secondary col-md-9"
+                              >
+                                <i className="fas fa-angle-double-right"></i>{" "}
+                                Details
+                              </a>
+                              <i
+                                className="fas fa-trash col-md-3 icon"
+                                onClick={() => deletePost(post._id)}
+                              ></i>
+                            </div>
                           </td>
                         </tr>
                       ))}
@@ -221,7 +256,10 @@ const AdminDashboard = () => {
           </div>
         </div>
       </section>
-      <CreatePostModal />
+      <CreatePostModal
+        isOpen={isCreateModalOpen}
+        closeModal={() => changeModalOpen(false)}
+      />
     </Fragment>
   );
 };

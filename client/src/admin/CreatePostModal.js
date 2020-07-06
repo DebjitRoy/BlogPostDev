@@ -1,24 +1,37 @@
 import React, { Fragment, useEffect, useState } from "react";
 import axios from "axios";
+import Modal from "react-bootstrap/Modal";
+import Spinner from "react-bootstrap/Spinner";
+import "bootstrap/dist/css/bootstrap.min.css";
+import ModalBody from "react-bootstrap/ModalBody";
+import ModalHeader from "react-bootstrap/ModalHeader";
+import ModalFooter from "react-bootstrap/ModalFooter";
+import ModalTitle from "react-bootstrap/ModalTitle";
 
-const CreatePostModal = () => {
+const CreatePostModal = ({ isOpen, closeModal }) => {
   const postCategories = ["travel", "books", "miscl"];
   const postType = {
     travel: "Travel",
     books: "Books",
     miscl: "Miscl",
   };
-  const [formState, onUpdateForm] = useState({
+  const initialFormState = {
     title: "",
-    category: "travel",
+    postType: "travel",
     coverImage: null,
-    sections: [
+    content: [
       {
         header: null,
-        body: null,
+        content: null,
+        image: null,
       },
     ],
-  });
+    gist: "",
+    searchBy: "",
+  };
+  const [formState, onUpdateForm] = useState(initialFormState);
+  const [isLoading, setLoading] = useState(false);
+
   const updateForm = (key, val) => {
     onUpdateForm({
       ...formState,
@@ -26,179 +39,249 @@ const CreatePostModal = () => {
     });
   };
 
+  useEffect(() => onUpdateForm(initialFormState), [isOpen]);
+
   const updateSection = (key, val, idx) => {
-    const sections = [...formState.sections];
-    sections[idx][key] = val;
+    const content = [...formState.content];
+    content[idx][key] = val;
     onUpdateForm({
       ...formState,
-      sections,
+      content,
     });
   };
-  //   const handleFileSelect = (evt) => {
-  //     changeImgState(evt.target.files[0]);
-  //   };
-
-  //   const uploadImage = async () => {
-  //     const fd = new FormData();
-  //     fd.append("file", imgState, imgState.name);
-  //     const resphoto = await axios.put(
-  //       "/api/posts/5ee5ca64f65af4bf397051fa/upload",
-  //       fd
-  //     );
-  //     console.log(resphoto);
-  //   };
-
-  //   const [sectionsState, changeSectionState] = useState([
-  //     {
-  //       header: null,
-  //       body: null,
-  //       //   image: null,
-  //     },
-  //   ]);
   const addSection = () => {
     const blankSection = {
       header: null,
-      body: null,
+      content: null,
     };
     // changeSectionState([...sectionsState, blankSection]);
     onUpdateForm({
       ...formState,
-      sections: [...formState.sections, blankSection],
+      content: [...formState.content, blankSection],
     });
   };
   const deleteSection = (idx) => {
-    const sections = [...formState.sections];
+    const sections = [...formState.content];
 
     sections.splice(idx, 1);
     onUpdateForm({
       ...formState,
-      sections: sections,
+      content: sections,
     });
     // changeSectionState([...sectionsState]);
   };
 
   const isSubmitDisabled = () =>
     formState.title.length < 3 ||
-    formState.category < 3 ||
-    (formState.sections[0].body && formState.sections[0].body.length < 5);
+    formState.postType < 3 ||
+    (formState.content[0].content && formState.content[0].content.length < 5);
 
-  const onFormSubmit = (evt) => {
+  const onFormSubmit = async (evt) => {
     evt.preventDefault();
-    console.log(formState);
+    setLoading(true);
+    const body = { ...formState };
+    const sectionImages = {};
+    body.content.forEach((section, idx) => {
+      if (section.image) {
+        sectionImages[idx] = section.image;
+        delete section.image;
+      }
+    });
+    body.searchBy = body.searchBy.length > 0 ? body.searchBy.split(",") : [];
+    // console.log(sectionImages);
+    delete body.coverImage;
+    body.gist =
+      body.gist.length > 0 ? body.gist : body.content[0].content.slice(0, 50);
+    try {
+      const res = await axios.post("/api/posts", body);
+      const createdPostId = res.data.data._id;
+      if (res.data && formState.coverImage) {
+        // console.log(res.data.data._id);
+        const fd = new FormData();
+        fd.append("file", formState.coverImage, formState.coverImage.name);
+        const resphoto = await axios.put(
+          `/api/posts/${createdPostId}/upload`,
+          fd
+        );
+        // console.log(resphoto);
+      }
+
+      if (Object.keys(sectionImages).length > 0) {
+        for (let section in Object.keys(sectionImages)) {
+          const sectionId = res.data.data.content[parseInt(section)]._id;
+          const fd = new FormData();
+          fd.append(
+            "file",
+            sectionImages[section],
+            sectionImages[section].name
+          );
+          await axios.put(
+            `/api/posts/${createdPostId}/sectionupload/${sectionId}`,
+            fd
+          );
+        }
+      }
+
+      setLoading(false);
+      closeModal();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
     <Fragment>
-      <div className="modal fade" id="addPostModal">
-        <div className="modal-dialog modal-lg">
-          <div className="modal-content">
-            <div className="modal-header bg-primary text-white">
-              <h5 className="modal-title">Add Post</h5>
-              <button className="close" data-dismiss="modal">
-                <span>&times;</span>
-              </button>
+      <Modal show={isOpen} size="lg">
+        <ModalHeader className="bg-primary text-white">
+          <ModalTitle>Add Post</ModalTitle>
+          <button className="close" onClick={closeModal}>
+            <span>&times;</span>
+          </button>
+        </ModalHeader>
+        <ModalBody>
+          <form onSubmit={onFormSubmit}>
+            <div className="form-group">
+              <label htmlFor="title">Title</label>
+              <input
+                type="text"
+                className="form-control"
+                value={formState.title}
+                required
+                onChange={(evt) => updateForm("title", evt.target.value)}
+              />
             </div>
-            <div className="modal-body">
-              <form onSubmit={onFormSubmit}>
+            <div className="form-group">
+              <label htmlFor="category">Category</label>
+              <select
+                className="form-control"
+                value={formState.postType}
+                required
+                onChange={(evt) => updateForm("postType", evt.target.value)}
+              >
+                {postCategories.map((category, idx) => (
+                  <option value={category} key={idx}>
+                    {postType[category]}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="form-group">
+              <label htmlFor="tags">Search Tags</label>
+              <input
+                type="text"
+                className="form-control"
+                value={formState.searchBy}
+                required
+                placeholder="Enter Comma separated"
+                onChange={(evt) => updateForm("searchBy", evt.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="image">Upload Cover Image</label>
+              <div className="custom-file">
+                <input
+                  type="file"
+                  className="custom-file-input"
+                  id="image"
+                  onChange={(evt) =>
+                    updateForm("coverImage", evt.target.files[0])
+                  }
+                />
+                <label htmlFor="image" className="custom-file-label">
+                  {(formState.coverImage && formState.coverImage.name) ||
+                    "Choose File"}
+                </label>
+              </div>
+              <small className="form-text text-muted">Max Size 300KB</small>
+            </div>
+            <label htmlFor="gist">Post Gist</label>
+            <textarea
+              name="editor1"
+              className="form-control"
+              value={formState.gist || ""}
+              required
+              onChange={(evt) => updateForm("gist", evt.target.value)}
+            ></textarea>
+            <hr />
+            {formState.content.map((section, idx) => (
+              <Fragment key={idx}>
                 <div className="form-group">
-                  <label htmlFor="title">Title</label>
+                  {idx > 0 ? (
+                    <div
+                      className="new-section ml-auto"
+                      onClick={() => deleteSection(idx)}
+                    >
+                      <i className="far fa-minus-square"></i>
+                    </div>
+                  ) : null}
+
+                  <label htmlFor="sectionHdr">Section Header</label>
                   <input
                     type="text"
                     className="form-control"
-                    value={formState.title}
-                    required
-                    onChange={(evt) => updateForm("title", evt.target.value)}
+                    placeholder="optional"
+                    value={section.header || ""}
+                    onChange={(evt) =>
+                      updateSection("header", evt.target.value, idx)
+                    }
                   />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="category">Category</label>
-                  <select
+                  <label htmlFor="body">Section Body</label>
+                  <textarea
+                    name="editor1"
                     className="form-control"
-                    value={formState.category}
+                    value={section.content || ""}
                     required
-                    onChange={(evt) => updateForm("category", evt.target.value)}
-                  >
-                    {postCategories.map((category, idx) => (
-                      <option value={category} key={idx}>
-                        {postType[category]}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="image">Upload Cover Image</label>
-                  <div className="custom-file">
-                    <input
-                      type="file"
-                      className="custom-file-input"
-                      id="image"
-                      onChange={(evt) =>
-                        updateForm("coverImage", evt.target.files[0])
-                      }
-                    />
-                    <label htmlFor="image" className="custom-file-label">
-                      {(formState.coverImage && formState.coverImage.name) ||
-                        "Choose File"}
-                    </label>
-                  </div>
-                  <small className="form-text text-muted">Max Size 300KB</small>
-                </div>
-                <hr />
-                {formState.sections.map((section, idx) => (
-                  <Fragment key={idx}>
-                    <div className="form-group">
-                      {idx > 0 ? (
-                        <div
-                          className="new-section ml-auto"
-                          onClick={() => deleteSection(idx)}
-                        >
-                          <i className="far fa-minus-square"></i>
-                        </div>
-                      ) : null}
+                    onChange={(evt) =>
+                      updateSection("content", evt.target.value, idx)
+                    }
+                  ></textarea>
 
-                      <label htmlFor="sectionHdr">Section Header</label>
+                  <div className="form-group">
+                    <label htmlFor="image">Upload Section Image</label>
+                    <div className="custom-file">
                       <input
-                        type="text"
-                        className="form-control"
-                        placeholder="optional"
-                        value={section.header || ""}
+                        type="file"
+                        className="custom-file-input"
+                        id="image"
                         onChange={(evt) =>
-                          updateSection("header", evt.target.value, idx)
+                          updateSection("image", evt.target.files[0], idx)
                         }
                       />
-                      <label htmlFor="body">Section Body</label>
-                      <textarea
-                        name="editor1"
-                        className="form-control"
-                        value={section.body || ""}
-                        required
-                        onChange={(evt) =>
-                          updateSection("body", evt.target.value, idx)
-                        }
-                      ></textarea>
+                      <label htmlFor="image" className="custom-file-label">
+                        {(section.image && section.image.name) || "Choose File"}
+                      </label>
                     </div>
-
-                    <hr />
-                  </Fragment>
-                ))}
-                <div className="new-section ml-auto" onClick={addSection}>
-                  <i className="far fa-plus-square"></i>Add New Section
+                    <small className="form-text text-muted">
+                      Max Size 300KB
+                    </small>
+                  </div>
                 </div>
-              </form>
+
+                <hr />
+              </Fragment>
+            ))}
+            <div className="new-section ml-auto" onClick={addSection}>
+              <i className="far fa-plus-square"></i>Add New Section
             </div>
-            <div className="modal-footer">
-              <button
-                type="submit"
-                className="btn btn-primary"
-                // data-dismiss="modal"
-                disabled={isSubmitDisabled()}
-              >
-                Save Changes
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+          </form>
+        </ModalBody>
+        <ModalFooter>
+          <button
+            type="submit"
+            className="btn btn-primary"
+            onClick={onFormSubmit}
+            disabled={isLoading || isSubmitDisabled()}
+          >
+            {isLoading ? (
+              <Spinner animation="border" role="status">
+                <span className="sr-only">Loading...</span>
+              </Spinner>
+            ) : (
+              <span>Save Changes</span>
+            )}
+          </button>
+        </ModalFooter>
+      </Modal>
     </Fragment>
   );
 };

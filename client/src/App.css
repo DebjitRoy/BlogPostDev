@@ -244,3 +244,12 @@ body {
 .new-section:hover {
   color: #333;
 }
+
+.icon {
+  padding-top: 5px;
+  cursor: pointer;
+}
+
+.icon:hover {
+  opacity: 0.5;
+}

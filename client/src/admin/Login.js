@@ -14,11 +14,11 @@ const LoginPage = () => (
                 <div className="card-body">
                   <form>
                     <div className="form-group">
-                      <label for="email">Email</label>
+                      <label htmlFor="email">Email</label>
                       <input type="text" className="form-control" />
                     </div>
                     <div className="form-group">
-                      <label for="password">Password</label>
+                      <label htmlFor="password">Password</label>
                       <input type="password" className="form-control" />
                     </div>
                     <Link
