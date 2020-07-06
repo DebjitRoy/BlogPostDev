@@ -94,7 +94,7 @@ const CreatePostModal = ({ isOpen, closeModal }) => {
     // console.log(sectionImages);
     delete body.coverImage;
     body.gist =
-      body.gist.length > 0 ? body.gist : body.content[0].content.slice(0, 50);
+      body.gist.length > 0 ? body.gist : body.content[0].content.slice(0, 350);
     try {
       const res = await axios.post("/api/posts", body);
       const createdPostId = res.data.data._id;

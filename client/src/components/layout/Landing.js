@@ -22,7 +22,7 @@ const Landing = () => {
       <section className="landing">
         <div className="dark-overlay">
           <div className="landing-inner">
-            <h1 className="x-large">চরৈবতি</h1>
+            <h1 className="display-3">বাতায়ন</h1>
             <p className="lead">ঘোরার গল্প, সিনেমার গল্প, আরো কিছু..</p>
           </div>
         </div>

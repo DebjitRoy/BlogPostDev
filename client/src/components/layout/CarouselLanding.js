@@ -29,7 +29,7 @@ const CaroselLanding = (props) => {
                 <div className={carClass} style={divImg} key={card._id}>
                   <div className="container">
                     <div className="carousel-caption d-sm-block text-right mb-5">
-                      <h2 className="display-3">{card.title}</h2>
+                      <h2 className="display-4">{card.title}</h2>
                       <p className="lead">{card.gist}</p>
                       <Link
                         to={`/${card.postType}/${card._id}`}

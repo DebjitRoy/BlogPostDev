@@ -6,7 +6,8 @@ const Navbar = () => {
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
       <div className="container">
         <Link to="/" className="navbar-brand">
-          <i className="fas fa-road"></i>
+          {/* <i className="fas fa-road"></i> */}
+          <img src="/uploads/window.png"></img>
         </Link>
         <button
           className="navbar-toggler"
