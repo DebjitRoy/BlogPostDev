@@ -24,6 +24,7 @@ const CreatePostModal = ({ isOpen, closeModal }) => {
         header: null,
         content: null,
         image: null,
+        imgDescription: null,
       },
     ],
     gist: "",
@@ -53,6 +54,8 @@ const CreatePostModal = ({ isOpen, closeModal }) => {
     const blankSection = {
       header: null,
       content: null,
+      image: null,
+      imgDescription: null,
     };
     // changeSectionState([...sectionsState, blankSection]);
     onUpdateForm({
@@ -255,6 +258,18 @@ const CreatePostModal = ({ isOpen, closeModal }) => {
                       Max Size 300KB
                     </small>
                   </div>
+
+                  <label htmlFor="imgHdr">Section Image Description</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="maximum 100 characters"
+                    max="100"
+                    value={section.imgDescription || ""}
+                    onChange={(evt) =>
+                      updateSection("imgDescription", evt.target.value, idx)
+                    }
+                  />
                 </div>
 
                 <hr />

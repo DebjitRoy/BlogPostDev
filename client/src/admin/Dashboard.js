@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
 import CreatePostModal from "./CreatePostModal";
@@ -183,13 +184,13 @@ const AdminDashboard = () => {
                           <td>{moment(post.createdAt).format("DD-MM-YYYY")}</td>
                           <td>
                             <div className="row">
-                              <a
-                                href="details.html"
+                              <Link
+                                to={`/travel/${post._id}`}
                                 className="btn btn-secondary col-md-9"
                               >
                                 <i className="fas fa-angle-double-right"></i>{" "}
                                 Details
-                              </a>
+                              </Link>
                               <i
                                 className="fas fa-trash col-md-3 icon"
                                 onClick={() => deletePost(post._id)}

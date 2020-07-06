@@ -8,7 +8,7 @@ const TravelPost = (props) => {
     (async () => {
       try {
         const res = await axios.get(`/api/posts/${props.match.params.id}`);
-        console.log(res.data);
+        // console.log(res.data);
         changePostState(res.data);
       } catch (error) {
         console.log(error);
@@ -77,7 +77,7 @@ const TravelPost = (props) => {
               </div>
             </div>
 
-            <div id="gallery">
+            {/* <div id="gallery">
               <div className="card">
                 <div className="card-header">
                   <h5 className="mb-0">
@@ -125,7 +125,7 @@ const TravelPost = (props) => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <div className="container my-4">
               {postState.data.content
@@ -134,8 +134,23 @@ const TravelPost = (props) => {
                       <p className="lead">
                         <b>{section.header}</b>
                       </p>
-
                       <p>{section.content}</p>
+                      {section.image ? (
+                        <div className="card col-md-8 centered">
+                          <div className="card-body">
+                            <img
+                              alt=""
+                              className="img-fluid"
+                              src={`https://bengali-blog-static-uploads.s3.amazonaws.com/${section.image}`}
+                            />
+                          </div>
+                          {section.imgDescription ? (
+                            <div className="card-footer">
+                              {section.imgDescription}
+                            </div>
+                          ) : null}
+                        </div>
+                      ) : null}
                     </div>
                   ))
                 : null}

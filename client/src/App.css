@@ -253,3 +253,13 @@ body {
 .icon:hover {
   opacity: 0.5;
 }
+
+.centered {
+  margin: 0 auto;
+  float: none;
+  margin-bottom: 10px;
+}
+
+.centered .card-footer {
+  text-align: center;
+}
