@@ -23,12 +23,12 @@ const TravelPost = (props) => {
           <div className="container">
             <h1 className="mt-4 mb-3">{postState.data.title}</h1>
 
-            <ol className="breadcrumb">
+            {/* <ol className="breadcrumb">
               <li className="breadcrumb-item">
                 <a href="index.html">প্রধান পাতা</a>
               </li>
               <li className="breadcrumb-item active">ভ্রমণিকা</li>
-            </ol>
+            </ol> */}
 
             <div className="row">
               <div className="col-lg-8">
@@ -168,7 +168,7 @@ const TravelPost = (props) => {
               </div>
             </div>
 
-            <div className="card my-4">
+            {/* <div className="card my-4">
               <h5 className="card-header">Leave a Comment:</h5>
               <div className="card-body">
                 <form>
@@ -208,7 +208,7 @@ const TravelPost = (props) => {
                 সীমান্ত অঞ্চল জড়ুে এই ফডথ ভযারল। রমলরেটাস ফথড়ক ফভার োঁচটায়
                 ফব্ররড়য় সাড়ে ব্াড়রাটা নাোে ফডথ ভযারলর এরি েড়য়ড়ন্ট এড়স ফেৌৌঁিলাম
               </div>
-            </div>
+            </div> */}
           </div>
         </section>
       </Fragment>

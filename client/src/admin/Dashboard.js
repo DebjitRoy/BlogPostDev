@@ -185,7 +185,7 @@ const AdminDashboard = () => {
                           <td>
                             <div className="row">
                               <Link
-                                to={`/travel/${post._id}`}
+                                to={`/admin/postedit/${post._id}`}
                                 className="btn btn-secondary col-md-9"
                               >
                                 <i className="fas fa-angle-double-right"></i>{" "}

@@ -263,3 +263,11 @@ body {
 .centered .card-footer {
   text-align: center;
 }
+
+.custom-file {
+  font-size: small;
+}
+
+/* .landing-slogan {
+  padding: 0 25%;
+} */

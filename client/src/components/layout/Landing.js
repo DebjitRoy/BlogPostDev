@@ -22,8 +22,11 @@ const Landing = () => {
       <section className="landing">
         <div className="dark-overlay">
           <div className="landing-inner">
-            <h1 className="display-3">বাতায়ন</h1>
-            <p className="lead">ঘোরার গল্প, সিনেমার গল্প, আরো কিছু..</p>
+            <h1 className="display-3 pt-5">বাতায়ন</h1>
+            <p className="lead col-md-6">
+              জীবন বদলে যায় বাইরের দৃশ্যের মতো। স্মৃতির পাতায় ধরা আছে কত মুহুর্ত
+              তারা ভিড় করে আসে বাতায়ন খুললেই।
+            </p>
           </div>
         </div>
       </section>
@@ -35,20 +38,14 @@ const Landing = () => {
               <Link className="menu-tile" to="/travel">
                 <i className="fas fa-road fa-3x mb-2"></i>
                 <h3>ভ্রমণিকা</h3>
-                <p>
-                  ভ্রমণ পিপাসু আমরা এখন কোন ছুটির তোয়াক্কা করিনা, বছরের যেকোন
-                  সময়ে বেড়িয়ে পড়লেই হলো।
-                </p>
+                <p>ভ্রমণ সংকলন। কাছে দূরে, দেশে বিদেশে, নানান অভিজ্ঞতা।</p>
               </Link>
             </div>
             <div className="col-md-4 mb-4 text-center">
               <Link className="menu-tile" to="/books">
                 <i className="fas fa-book fa-3x mb-2"></i>
                 <h3>মনের আনন্দ</h3>
-                <p>
-                  যেকোন ধরনের বই পড়তেই ভালো লাগে। ধর্ম, ইতিহাস, প্রবন্ধ, সামাজিক
-                  ,ছোট গল্প ,উপন‍্যাস।
-                </p>
+                <p>বই পড়া, গান শোনা, সিনেমা দেখা, আর আড্ডার সাথে ধর্মচর্চাও।</p>
               </Link>
             </div>
             <div className="col-md-4 mb-4 text-center">
@@ -56,7 +53,7 @@ const Landing = () => {
                 <i className="fab fa-affiliatetheme fa-3x mb-2"></i>
                 <h3>টুকিটাকি</h3>
                 <p>
-                  কত কিছু বলার আছে কত কিছু শোনার বাকি। কতকিছু দেখলাম এ জীবনে
+                  সব রকম চিন্তা ভাবনা, ভালো লাগা, মন্দ লাগা, যা কিছু মনে আসে।
                 </p>
               </Link>
             </div>
