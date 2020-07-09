@@ -19,7 +19,10 @@ const CaroselLanding = (props) => {
             props.data.map((card, idx) => {
               //   let carClass = "carousel-item carousel-image-1";
               let divImg = {
-                backgroundImage: `url(/uploads/carousel-${idx + 1}.jpg)`,
+                backgroundImage:
+                  `url(https://bengali-blog-static-uploads.s3.amazonaws.com/${card.photoHero})` ||
+                  `url(/uploads/carousel-${idx + 1}.jpg)`,
+                backgroundPosition: "center",
               };
               let carClass =
                 idx === 0
