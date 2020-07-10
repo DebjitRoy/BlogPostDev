@@ -112,11 +112,12 @@ module.exports.getPost = async (req, res, next) => {
 // CREATE/POST
 module.exports.createPost = async (req, res) => {
   try {
-    // console.log(body);
+    // console.log(req.body);
     const post = await Post.create(req.body);
     // console.log(post);
     res.status(200).json({ success: true, data: post });
   } catch (error) {
+    console.log(error);
     res.status(400).json({ success: false, err: error });
   }
 };
@@ -146,6 +147,7 @@ module.exports.deletePost = async (req, res, next) => {
     }
     res.status(400).json({ success: false });
   } catch (error) {
+    console.log(error);
     next(new ErrorResponse(`Bootcamp ID ${req.params.id} not found`, 404));
   }
 };

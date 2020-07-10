@@ -3,12 +3,15 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
 import CreatePostModal from "./CreatePostModal";
+import DeleteModal from "./DeleteModal";
 
 const AdminDashboard = () => {
   const [latestPosts, changePostData] = useState(null);
   const [countData, changeCounts] = useState(null);
   const [selectedPostType, changeSelectedType] = useState("all");
   const [isCreateModalOpen, changeModalOpen] = useState(false);
+  const [isDeleteModalOpen, changeDeleteModalOpen] = useState(false);
+  const [currentPost, setCurrentPost] = useState(null);
   const selectedCategory = {
     all: "All Posts",
     travel: "Travel Posts",
@@ -17,27 +20,8 @@ const AdminDashboard = () => {
   };
   useEffect(() => {
     getRecentPosts();
-    // (async () => {
-    //   // try {
-    //   //   const res = await axios.get(
-    //   //     "/api/posts?limit=25&select=title,postType,postType,createdAt"
-    //   //   );
-    //   //   changePostData(res.data.data);
-
-    //   //   const countVal = await axios.get("/api/posts/count");
-    //   //   const { count, travelcount, bookcount, misclcount } = countVal.data;
-    //   //   console.log(countVal);
-    //   //   changeCounts({
-    //   //     count,
-    //   //     travelcount,
-    //   //     bookcount,
-    //   //     misclcount,
-    //   //   });
-    //   // } catch (error) {
-    //   //   console.log(error);
-    //   // }
-    // })();
   }, [isCreateModalOpen]);
+
   const getRecentPosts = async () => {
     try {
       const res = await axios.get(
@@ -76,13 +60,19 @@ const AdminDashboard = () => {
       console.log(err);
     }
   };
-  const deletePost = async (id) => {
+  const deletePost = async () => {
     try {
-      const res = await axios.delete(`/api/posts/${id}`);
+      const res = await axios.delete(`/api/posts/${currentPost._id}`);
+      changeDeleteModalOpen(false);
       getRecentPosts();
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleDeletePost = (post) => {
+    setCurrentPost(post);
+    changeDeleteModalOpen(true);
   };
   return (
     <Fragment>
@@ -193,7 +183,8 @@ const AdminDashboard = () => {
                               </Link>
                               <i
                                 className="fas fa-trash col-md-3 icon"
-                                onClick={() => deletePost(post._id)}
+                                // onClick={() => deletePost(post._id)}
+                                onClick={() => handleDeletePost(post)}
                               ></i>
                             </div>
                           </td>
@@ -260,6 +251,15 @@ const AdminDashboard = () => {
       <CreatePostModal
         isOpen={isCreateModalOpen}
         closeModal={() => changeModalOpen(false)}
+      />
+      <DeleteModal
+        postTitle={currentPost && currentPost.title}
+        isOpen={isDeleteModalOpen}
+        closeModal={() => {
+          setCurrentPost(null);
+          changeDeleteModalOpen(false);
+        }}
+        onPostDelete={() => deletePost()}
       />
     </Fragment>
   );

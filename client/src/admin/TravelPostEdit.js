@@ -138,6 +138,7 @@ const TravelPostEdit = (props) => {
                 <p>{`Posted on ${moment(postState.data.createdAt).format(
                   "DD-MM-YYYY"
                 )}`}</p>
+                <p>{postState.data.additionalInfo}</p>
                 <hr />
               </div>
               <div className="col-md-4">

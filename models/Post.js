@@ -47,6 +47,7 @@ const PostSchema = new mongoose.Schema({
     type: [String],
     required: [true, "Post should contain search strings"],
   },
+  additionalInfo: String,
 });
 
 module.exports = mongoose.model("Post", PostSchema);

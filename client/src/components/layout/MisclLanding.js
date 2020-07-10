@@ -71,7 +71,7 @@ const MisclLanding = () => {
         <div className="container">
           {misclListState &&
             misclListState.map((card) => (
-              <TravelItem data={card} key={card._id} />
+              <TravelItem data={card} key={card._id} postType="miscl" />
             ))}
 
           <ul className="pagination justify-content-center mb-4">

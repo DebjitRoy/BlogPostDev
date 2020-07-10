@@ -205,6 +205,13 @@ const CreatePostModal = ({ isOpen, closeModal }) => {
               required
               onChange={(evt) => updateForm("gist", evt.target.value)}
             ></textarea>
+            <input
+              type="text"
+              className="form-control"
+              value={formState.additionalInfo}
+              placeholder="Additional Information"
+              onChange={(evt) => updateForm("additionalInfo", evt.target.value)}
+            />
             <hr />
             {formState.content.map((section, idx) => (
               <Fragment key={idx}>

@@ -44,7 +44,7 @@ const TravelPost = (props) => {
                 <p>{`Posted on ${moment(postState.data.createdAt).format(
                   "DD-MM-YYYY"
                 )}`}</p>
-
+                <p>{postState.data.additionalInfo}</p>
                 <hr />
               </div>
               <div className="col-md-4">
@@ -137,7 +137,7 @@ const TravelPost = (props) => {
                       <p>{section.content}</p>
                       {section.image ? (
                         <div className="card col-md-8 centered">
-                          <div className="card-body">
+                          <div className="card-body section-image">
                             <img
                               alt=""
                               className="img-fluid"

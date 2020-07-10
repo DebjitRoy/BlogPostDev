@@ -91,7 +91,7 @@ const BooksLanding = () => {
         <div className="container">
           {bookListState &&
             bookListState.map((card) => (
-              <TravelItem data={card} key={card._id} />
+              <TravelItem data={card} key={card._id} postType="books" />
             ))}
 
           <ul className="pagination justify-content-center mb-4">

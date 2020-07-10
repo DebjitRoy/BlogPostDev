@@ -35,7 +35,7 @@ body {
   background-size: cover;
   filter: grayscale(80%);
 }
-
+/* 
 .carousel-image-1 {
   background: url("./img/img-sf.jpg");
   background-size: cover;
@@ -52,8 +52,8 @@ body {
   background: url("./img/img-taj.jpg");
   background-size: cover;
   filter: grayscale(80%);
-}
-
+} */
+/* 
 #home-heading {
   position: relative;
   min-height: 200px;
@@ -62,7 +62,7 @@ body {
   background-repeat: no-repeat;
   text-align: center;
   color: #fff;
-}
+} */
 
 .dark-overlay {
   position: absolute;
@@ -75,7 +75,7 @@ body {
 
 #page-header {
   height: 250px;
-  background: url("./img/sunset-road.jpg");
+  background: url("./img/main-img.jpg");
   background-position: 0 -360px;
   background-attachment: fixed;
   color: #fff;
@@ -117,7 +117,7 @@ body {
 /* Landing Page */
 .landing {
   position: relative;
-  background: url("./img/main-img.jpg") no-repeat center center/cover;
+  background: url("./img/img-main.jpg") no-repeat center center/cover;
   height: 60vh;
 }
 
@@ -202,7 +202,7 @@ body {
 /*
   Below are temporary classes to display static images
 */
-.img-sf {
+/* .img-sf {
   content: url(./img/img-sf.jpg);
 }
 .img-g1 {
@@ -216,7 +216,7 @@ body {
 }
 .img-g4 {
   content: url(./img/gal-4.jpg);
-}
+} */
 
 /*********/
 
@@ -268,6 +268,6 @@ body {
   font-size: small;
 }
 
-/* .landing-slogan {
-  padding: 0 25%;
-} */
+.section-image {
+  padding: 0.25rem !important;
+}
