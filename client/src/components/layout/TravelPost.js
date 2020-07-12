@@ -107,7 +107,7 @@ const TravelPost = (props) => {
             </div>
 
             <hr />
-            <div className="d-block d-sm-none card mb-4">
+            {/* <div className="d-block d-sm-none card mb-4">
               <h5 className="card-header">Give a Like</h5>
               <div className="card-body">
                 পোস্টটি ভালোলাগলে Like ও Share করুন
@@ -116,7 +116,7 @@ const TravelPost = (props) => {
                   <i className="fas fa-share-alt p-3"></i>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             {/* <div className="card my-4">
               <h5 className="card-header">Leave a Comment:</h5>
