@@ -8,18 +8,29 @@ import ModalHeader from "react-bootstrap/ModalHeader";
 import ModalFooter from "react-bootstrap/ModalFooter";
 import ModalTitle from "react-bootstrap/ModalTitle";
 
-const DeleteModal = ({ isOpen, closeModal, onPostDelete, postTitle }) => {
+const typeMapper = {
+  content: "Section",
+  sectionImage: "Section Image",
+  post: "Post",
+};
+const DeleteModal = ({
+  isOpen,
+  closeModal,
+  onPostDelete,
+  postTitle,
+  deleteType,
+}) => {
   const [isLoading, setLoading] = useState(false);
   return (
     <Modal show={isOpen}>
       <ModalHeader className="bg-primary text-white">
-        <ModalTitle>Delete Post</ModalTitle>
+        <ModalTitle>Delete</ModalTitle>
         <button className="close" onClick={closeModal}>
           <span>&times;</span>
         </button>
       </ModalHeader>
       <ModalBody>
-        <h5>Do You Want To Delete this Post?</h5>
+        <h5>Do You Want To Delete this {typeMapper[deleteType] || "Post"}?</h5>
         <h3 className="display-5">{postTitle}</h3>
       </ModalBody>
       <ModalFooter>

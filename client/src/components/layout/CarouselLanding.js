@@ -20,8 +20,9 @@ const CaroselLanding = (props) => {
               //   let carClass = "carousel-item carousel-image-1";
               let divImg = {
                 backgroundImage:
-                  `url(https://bengali-blog-static-uploads.s3.amazonaws.com/${card.photoHero})` ||
-                  `url(/uploads/carousel-${idx + 1}.jpg)`,
+                  card.photoHero !== "no-photo.jpg"
+                    ? `url(https://bengali-blog-static-uploads.s3.amazonaws.com/${card.photoHero})`
+                    : `url(/uploads/carousel-${idx + 1}.jpg)`,
                 backgroundPosition: "center",
               };
               let carClass =

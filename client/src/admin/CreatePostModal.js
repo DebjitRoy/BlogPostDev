@@ -32,6 +32,7 @@ const CreatePostModal = ({ isOpen, closeModal }) => {
   };
   const [formState, onUpdateForm] = useState(initialFormState);
   const [isLoading, setLoading] = useState(false);
+  const [previewCoverImg, setCoverImg] = useState(null);
 
   const updateForm = (key, val) => {
     onUpdateForm({
@@ -41,6 +42,10 @@ const CreatePostModal = ({ isOpen, closeModal }) => {
   };
 
   useEffect(() => onUpdateForm(initialFormState), [isOpen]);
+
+  useEffect(() => {
+    getCoverImage();
+  }, [formState.coverImage]);
 
   const updateSection = (key, val, idx) => {
     const content = [...formState.content];
@@ -132,6 +137,25 @@ const CreatePostModal = ({ isOpen, closeModal }) => {
     }
   };
 
+  const getCoverImage = () => {
+    const fr = new FileReader();
+    if (formState && formState.coverImage) {
+      const url = fr.readAsDataURL(formState.coverImage);
+      console.log("getCoverImage" + url);
+      fr.onloadend = function (e) {
+        // this.setState({
+        //   imgSrc: [fr.result],
+        // });
+        setCoverImg({
+          imgSrc: [fr.result],
+        });
+      };
+      // fd.append("file", formState.coverImage, formState.coverImage.name);
+      // return fd;
+    }
+    return null;
+  };
+
   return (
     <Fragment>
       <Modal show={isOpen} size="lg">
@@ -186,9 +210,10 @@ const CreatePostModal = ({ isOpen, closeModal }) => {
                   type="file"
                   className="custom-file-input"
                   id="image"
-                  onChange={(evt) =>
-                    updateForm("coverImage", evt.target.files[0])
-                  }
+                  onChange={(evt) => {
+                    // getCoverImage();
+                    updateForm("coverImage", evt.target.files[0]);
+                  }}
                 />
                 <label htmlFor="image" className="custom-file-label">
                   {(formState.coverImage && formState.coverImage.name) ||
@@ -196,6 +221,7 @@ const CreatePostModal = ({ isOpen, closeModal }) => {
                 </label>
               </div>
               <small className="form-text text-muted">Max Size 300KB</small>
+              {/* <img className="image-preview" src={previewCoverImg} /> */}
             </div>
             <label htmlFor="gist">Post Gist</label>
             <textarea

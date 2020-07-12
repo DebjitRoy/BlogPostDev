@@ -31,7 +31,7 @@ const AdminDashboard = () => {
 
       const countVal = await axios.get("/api/posts/count");
       const { count, travelcount, bookcount, misclcount } = countVal.data;
-      console.log(countVal);
+      // console.log(countVal);
       changeCounts({
         count,
         travelcount,

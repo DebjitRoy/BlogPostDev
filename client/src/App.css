@@ -35,34 +35,6 @@ body {
   background-size: cover;
   filter: grayscale(80%);
 }
-/* 
-.carousel-image-1 {
-  background: url("./img/img-sf.jpg");
-  background-size: cover;
-  filter: grayscale(80%);
-}
-
-.carousel-image-2 {
-  background: url("./img/lights.jpg");
-  background-size: cover;
-  filter: grayscale(80%);
-}
-
-.carousel-image-3 {
-  background: url("./img/img-taj.jpg");
-  background-size: cover;
-  filter: grayscale(80%);
-} */
-/* 
-#home-heading {
-  position: relative;
-  min-height: 200px;
-  background: url("./img/lights.jpg");
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  text-align: center;
-  color: #fff;
-} */
 
 .dark-overlay {
   position: absolute;
@@ -76,7 +48,7 @@ body {
 #page-header {
   height: 250px;
   background: url("./img/main-img.jpg");
-  background-position: 0 -360px;
+  background-position: center;
   background-attachment: fixed;
   color: #fff;
   border-bottom: 1px #eee solid;
@@ -118,6 +90,7 @@ body {
 .landing {
   position: relative;
   background: url("./img/img-main.jpg") no-repeat center center/cover;
+  background-position: top;
   height: 60vh;
 }
 
@@ -199,27 +172,6 @@ body {
   font-size: 25px;
 }
 
-/*
-  Below are temporary classes to display static images
-*/
-/* .img-sf {
-  content: url(./img/img-sf.jpg);
-}
-.img-g1 {
-  content: url(./img/gal-1.jpg);
-}
-.img-g2 {
-  content: url(./img/gal-2.jpg);
-}
-.img-g3 {
-  content: url(./img/gal-3.jpg);
-}
-.img-g4 {
-  content: url(./img/gal-4.jpg);
-} */
-
-/*********/
-
 .menu-tile {
   color: #333;
 }
@@ -270,4 +222,8 @@ body {
 
 .section-image {
   padding: 0.25rem !important;
+}
+
+.image-preview {
+  max-width: 80px;
 }
