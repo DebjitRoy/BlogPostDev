@@ -123,7 +123,6 @@ const TravelLanding = () => {
                 <div
                   className="page-link"
                   onClick={() => {
-                    console.log(currentPage);
                     changeCurrentPage(currentPage + 1);
                   }}
                 >

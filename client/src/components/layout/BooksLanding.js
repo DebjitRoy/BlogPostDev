@@ -5,18 +5,22 @@ import TravelItem from "./TravelItem";
 
 const BooksLanding = () => {
   const [bookListState, changeBookListState] = useState(null);
+  const [paginationState, changePaginationState] = useState(null);
+  const [currentPage, changeCurrentPage] = useState(1);
+
   useEffect(() => {
     (async () => {
       try {
         const res = await axios.get(
-          "/api/posts?postType=books&limit=5&select=title,gist,photoHero,createdAt"
+          `/api/posts?postType=books&limit=5&page=${currentPage}&select=title,gist,photoHero,createdAt`
         );
         changeBookListState(res.data.data);
+        changePaginationState(res.data.pagination);
       } catch (error) {
         console.log(error);
       }
     })();
-  }, []);
+  }, [currentPage]);
   return (
     <Fragment>
       <header id="page-header">
@@ -94,18 +98,36 @@ const BooksLanding = () => {
               <TravelItem data={card} key={card._id} postType="books" />
             ))}
 
-          <ul className="pagination justify-content-center mb-4">
-            <li className="page-item">
-              <a className="page-link" href="#">
-                &larr; Older
-              </a>
-            </li>
-            <li className="page-item disabled">
-              <a className="page-link" href="#">
-                Newer &rarr;
-              </a>
-            </li>
-          </ul>
+          {paginationState && paginationState.totalPage > 1 ? (
+            <ul className="pagination justify-content-center mb-4">
+              <li
+                className={`page-item ${
+                  !paginationState.prev ? "disabled" : null
+                }`}
+              >
+                <div
+                  className="page-link"
+                  onClick={() => changeCurrentPage(currentPage - 1)}
+                >
+                  &larr; Older
+                </div>
+              </li>
+              <li
+                className={`page-item ${
+                  !paginationState.next ? "disabled" : null
+                }`}
+              >
+                <div
+                  className="page-link"
+                  onClick={() => {
+                    changeCurrentPage(currentPage + 1);
+                  }}
+                >
+                  Newer &rarr;
+                </div>
+              </li>
+            </ul>
+          ) : null}
         </div>
       </section>
     </Fragment>
