@@ -31,7 +31,7 @@ const TravelPost = (props) => {
             </ol> */}
 
             <div className="row">
-              <div className="col-lg-8">
+              <div className="col-lg-8 centered">
                 <img
                   className="img-fluid rounded"
                   // src={`/uploads/${postState.data.photoHero}`}
@@ -47,7 +47,7 @@ const TravelPost = (props) => {
                 <p>{postState.data.additionalInfo}</p>
                 <hr />
               </div>
-              <div className="col-md-4">
+              {/* <div className="col-md-4">
                 <div className="visited-card card mb-4">
                   <h5 className="card-header">Visited</h5>
                   <div className="card-body">
@@ -74,58 +74,8 @@ const TravelPost = (props) => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
-
-            {/* <div id="gallery">
-              <div className="card">
-                <div className="card-header">
-                  <h5 className="mb-0">
-                    <a
-                      href="#collapseOne"
-                      data-toggle="collapse"
-                      data-parent="accordion"
-                    >
-                      Gallery
-                    </a>
-                  </h5>
-                </div>
-
-                <div id="collapseOne" className="collapse">
-                  <div className="card-body py-5">
-                    <div className="row no-gutters">
-                      <div className="col-md-3">
-                        <a
-                          href="http://localhost:5000/uploads/photo_5ee67e85f357c8ddfad2a707.jpg"
-                          data-toggle="lightbox"
-                        >
-                          <img
-                            alt=""
-                            className="img-fluid"
-                            src="/uploads/photo_5ee67e85f357c8ddfad2a707.jpg"
-                          />
-                        </a>
-                      </div>
-                      <div className="col-md-3">
-                        <a href="./img/gal-2.jpg" data-toggle="lightbox">
-                          <img alt="" className="img-fluid img-g2" />
-                        </a>
-                      </div>
-                      <div className="col-md-3">
-                        <a href="./img/gal-3.jpg" data-toggle="lightbox">
-                          <img alt="" className="img-fluid img-g3" />
-                        </a>
-                      </div>
-                      <div className="col-md-3">
-                        <a href="./img/gal-4.jpg" data-toggle="lightbox">
-                          <img alt="" className="img-fluid img-g4" />
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> */}
 
             <div className="container my-4">
               {postState.data.content
