@@ -14,7 +14,7 @@ const TravelPostEdit = (props) => {
   const [isLoading, setLoading] = useState(false);
   const [editSectionIdx, setEditingSection] = useState(null);
   const [isDeleteModalOpen, changeDeleteModalOpen] = useState(false);
-  // const [currentSection, setCurrentSection] = useState(null);
+  const [showAddSection, setAddSection] = useState(false);
   // const [isFormSubmitted, setFormSubmitted] = useState(false);
   const history = useHistory();
   useEffect(() => {
@@ -131,14 +131,14 @@ const TravelPostEdit = (props) => {
 
   const onEditSection = (category, editSection, value) => {
     const updatedSection = [...formState.content];
-    const idx = updatedSection.findIndex(
-      (sect) => sect._id === editSection._id
-    );
+    // const idx = updatedSection.findIndex(
+    //   (sect) => sect._id === editSection._id
+    // );
     const currSection = {
-      ...updatedSection[idx],
+      ...updatedSection[editSectionIdx],
       [category]: value,
     };
-    updatedSection.splice(idx, 1, currSection);
+    updatedSection.splice(editSectionIdx, 1, currSection);
     changeFormState({
       ...formState,
       content: updatedSection,
@@ -165,6 +165,37 @@ const TravelPostEdit = (props) => {
       content: updatedSection,
     });
     window.location.reload();
+  };
+
+  const addSection = (sectionId) => {
+    const updatedSection = [...formState.content];
+    const newSection = {
+      header: null,
+      content: null,
+      imgDescription: null,
+      image: null,
+    };
+    const editingSection =
+      editSectionIdx || sectionId || formState.content.length;
+    setEditingSection(editingSection);
+    updatedSection.splice(editingSection, 0, newSection);
+
+    changeFormState({
+      ...formState,
+      content: updatedSection,
+    });
+    setAddSection(true);
+    setEditState("content");
+  };
+
+  const cancelAddSection = () => {
+    const updatedSection = [...formState.content];
+    updatedSection.splice(editSectionIdx, 1);
+    changeFormState({
+      ...formState,
+      content: updatedSection,
+    });
+    setAddSection(false);
   };
 
   const onEditSubmit = async () => {
@@ -368,7 +399,13 @@ const TravelPostEdit = (props) => {
                                 setEditingSection(idx);
                               }}
                             ></i>
-                            <i className="icon fas fa-plus px-2"></i>{" "}
+                            <i
+                              className="icon fas fa-plus px-2"
+                              onClick={() => {
+                                setEditingSection(idx);
+                                addSection(idx);
+                              }}
+                            ></i>{" "}
                             <i
                               className="icon fas fa-trash px-2"
                               // removeSection(idx)
@@ -389,6 +426,67 @@ const TravelPostEdit = (props) => {
                         </div>
                       ) : null}
 
+                      {showAddSection && editSectionIdx === idx ? (
+                        <div className="card mb-4 col-md-10 centered">
+                          <div className="card-header">
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Section Header"
+                              value={
+                                (formState.content[editSectionIdx] &&
+                                  formState.content[editSectionIdx].header) ||
+                                ""
+                              }
+                              onChange={
+                                (evt) => {
+                                  onEditSection(
+                                    "header",
+                                    formState.content[editSectionIdx],
+                                    evt.target.value
+                                  );
+                                }
+                                // onEditSection("header", section, evt.target.value)
+                              }
+                            />
+                          </div>
+                          <div className="card-body">
+                            <textarea
+                              name="editor1"
+                              className="form-control"
+                              placeholder="Section Body"
+                              value={
+                                (formState.content[editSectionIdx] &&
+                                  formState.content[editSectionIdx].content) ||
+                                ""
+                              }
+                              required
+                              onChange={(evt) => {
+                                onEditSection(
+                                  "content",
+                                  formState.content[editSectionIdx],
+                                  evt.target.value
+                                );
+                              }}
+                            ></textarea>
+                          </div>
+                          <div className="card-footer">
+                            <button
+                              className="btn btn-primary mx-1"
+                              onClick={onEditSubmit}
+                            >
+                              Submit
+                            </button>
+                            <button
+                              className="btn btn-secondary mx-1"
+                              onClick={cancelAddSection}
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        </div>
+                      ) : null}
+
                       {editingState !== "content" || editSectionIdx !== idx ? (
                         <div>
                           <p className="lead">
@@ -398,7 +496,9 @@ const TravelPostEdit = (props) => {
                         </div>
                       ) : null}
 
-                      {editingState === "content" && editSectionIdx === idx ? (
+                      {editingState === "content" &&
+                      editSectionIdx === idx &&
+                      !showAddSection ? (
                         <div className="card mb-4">
                           <div className="card-header">
                             <input
@@ -559,8 +659,76 @@ const TravelPostEdit = (props) => {
                   ))
                 : null}
               <span>
-                <i className="icon fas fa-plus px-2 "></i>Add a new Section
+                <i
+                  className="icon fas fa-plus px-2 "
+                  onClick={() => addSection()}
+                  //   () => {
+                  //   // setEditingSection(formState.content.length);
+                  //   addSection();
+                  // }}
+                ></i>
+                Add a new Section
               </span>
+              {showAddSection ? (
+                <div className="card mb-4 col-md-10 centered">
+                  <div className="card-header">
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Section Header"
+                      value={
+                        (formState.content[editSectionIdx] &&
+                          formState.content[editSectionIdx].header) ||
+                        ""
+                      }
+                      onChange={
+                        (evt) => {
+                          onEditSection(
+                            "header",
+                            formState.content[editSectionIdx],
+                            evt.target.value
+                          );
+                        }
+                        // onEditSection("header", section, evt.target.value)
+                      }
+                    />
+                  </div>
+                  <div className="card-body">
+                    <textarea
+                      name="editor1"
+                      className="form-control"
+                      placeholder="Section Body"
+                      value={
+                        (formState.content[editSectionIdx] &&
+                          formState.content[editSectionIdx].content) ||
+                        ""
+                      }
+                      required
+                      onChange={(evt) => {
+                        onEditSection(
+                          "content",
+                          formState.content[editSectionIdx],
+                          evt.target.value
+                        );
+                      }}
+                    ></textarea>
+                  </div>
+                  <div className="card-footer">
+                    <button
+                      className="btn btn-primary mx-1"
+                      onClick={onEditSubmit}
+                    >
+                      Submit
+                    </button>
+                    <button
+                      className="btn btn-secondary mx-1"
+                      onClick={cancelAddSection}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              ) : null}
             </div>
           </div>
         </section>
