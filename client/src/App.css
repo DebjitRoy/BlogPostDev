@@ -244,3 +244,10 @@ body {
 #authors .fab {
   color: #007bff;
 }
+#authors .fab:hover {
+  color: #fff;
+}
+
+#authors .card P {
+  min-height: 220px;
+}

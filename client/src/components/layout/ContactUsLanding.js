@@ -49,8 +49,12 @@ const ContactUsLanding = () => {
                   <h3>দেবাশিস রায়</h3>
                   <h5 className="text-muted">Photography</h5>
                   <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed
-                    commodi nostrum, ab libero voluptas officia.
+                    পেশা ছিলো ব্যাংকার, নেশা বইপড়া, গান শোনা, বেড়ানো, আর
+                    প্রধানতঃ ফটোগ্রাফি, যা আমাকে সেই শৈশব থেকেই বেঁধে রেখেছে।
+                    হাতেখড়ি বাবার কিনে দেওয়া ক্লিক থ্রি দিয়ে, সেই যখন ক্লাস টেনে
+                    পড়ি। আর এখন তো ডিজিটালের যুগ, তাই আমাকেও মাধ্যম বদলাতে হয়েছে
+                    যুগোপযোগী হতে। যতই বদলাক, ফটোগ্রাফি তার আকর্ষণ একটুও
+                    হারায়নি, আজও। তবে, আমি কিন্তু আজও শিখছি, শিখেই চলবো --
                   </p>
                   <div className="d-flex justify-content-center">
                     <div className="p-4">
@@ -84,8 +88,13 @@ const ContactUsLanding = () => {
                   <h3>দেবজিৎ রায় </h3>
                   <h5 className="text-muted">Developer</h5>
                   <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed
-                    commodi nostrum, ab libero voluptas officia.
+                    পেশায় কম্পিউটার ডেভেলপার। কাজের সূত্রে আপাতত আমেরিকার
+                    ক্যালিফোর্নিয়ায়। লেখিকার পুত্র। ভালোবাসি বেড়াতে, বিশেষত
+                    পাহাড় - জঙ্গল। প্রকৃতিকে ভালোবাসতে শেখা বাবা-মা র কাছ থেকেই।
+                    তাই অপেক্ষায় থাকি মার নতুন লেখার আর বাবার ফটোগ্রাফির। সেই
+                    ভালোলাগাগুলো আর আমার জীবিকার সূত্রে শেখা প্রযুক্তিকে হাতিয়ার
+                    করে এই বাতায়নটি, মা র লেখনীকে আপনাদের কাছে পৌঁছে দেওয়ার
+                    সামান্য এই প্রচেষ্টা।
                   </p>
                   <div className="d-flex justify-content-center">
                     <div className="p-4">
@@ -95,7 +104,7 @@ const ContactUsLanding = () => {
                     </div>
                     <div className="p-4">
                       <a href="http://twitter.com">
-                        <i className="fab fa-twitter"></i>
+                        <i className="fab fa-github"></i>
                       </a>
                     </div>
                     <div className="p-4">
@@ -119,8 +128,11 @@ const ContactUsLanding = () => {
                   <h3>পারমিতা রায়</h3>
                   <h5 className="text-muted">Assistant Developer</h5>
                   <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed
-                    commodi nostrum, ab libero voluptas officia.
+                    লেখিকার পুত্রবধূ। এই প্রচেষ্টার সঙ্গী হয়ে আমি কখনো মা-র
+                    প্রুফ-রিডার, কখনো স্বামীর সহকর্মী। ভ্রমণ এবং ভ্রমণ কাহিনী
+                    দুটি ই খুব প্রিয়। পেশায় ছিলাম হাসপাতাল এডমিনিস্ট্রেটর , এখন
+                    আমেরিকায় আপাতত বাড়িতেই। দেবজিতের কাছে শিখছি কম্পিউটারের
+                    খুঁটিনাটি সময় বের করে, আর ভালোলাগছে নতুন এই প্রচেষ্টা।
                   </p>
                   <div className="d-flex justify-content-center">
                     <div className="p-4">
