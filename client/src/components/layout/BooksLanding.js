@@ -109,7 +109,7 @@ const BooksLanding = () => {
                   className="page-link"
                   onClick={() => changeCurrentPage(currentPage - 1)}
                 >
-                  &larr; Older
+                  &larr; আগের
                 </div>
               </li>
               <li
@@ -123,7 +123,7 @@ const BooksLanding = () => {
                     changeCurrentPage(currentPage + 1);
                   }}
                 >
-                  Newer &rarr;
+                  পরের &rarr;
                 </div>
               </li>
             </ul>

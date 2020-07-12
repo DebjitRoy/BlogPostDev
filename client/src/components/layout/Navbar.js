@@ -59,7 +59,7 @@ const Navbar = () => {
               data-toggle="collapse"
               data-target="#navbarCollapse"
             >
-              <NavLink to="/miscl" className="nav-link">
+              <NavLink to="/contactus" className="nav-link">
                 যোগাযোগ
               </NavLink>
               {/* <a href="contact.html" className="nav-link">

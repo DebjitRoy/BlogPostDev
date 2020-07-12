@@ -227,3 +227,20 @@ body {
 .image-preview {
   max-width: 80px;
 }
+
+#authors img {
+  margin-top: -50px;
+}
+
+.info-header img {
+  margin-top: -100px;
+  max-width: 200px;
+}
+
+#authors .card:hover {
+  background: #3292a6;
+  color: #fff;
+}
+#authors .fab {
+  color: #007bff;
+}

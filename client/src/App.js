@@ -14,6 +14,7 @@ import LoginPage from "./admin/Login";
 import AdminNavbar from "./admin/AdminNavbar";
 import AdminDashboard from "./admin/Dashboard";
 import TravelPostEdit from "./admin/TravelPostEdit";
+import ContactUsLanding from "./components/layout/ContactUsLanding";
 
 const App = () => (
   <Router>
@@ -40,6 +41,7 @@ const App = () => (
         <Route exact path="/admin/login" component={LoginPage} />
         <Route exact path="/admin/dashboard" component={AdminDashboard} />
         <Route exact path="/admin/postedit/:id" component={TravelPostEdit} />
+        <Route exact path="/contactus" component={ContactUsLanding} />
       </Switch>
       <Footer />
     </Fragment>
