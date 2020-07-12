@@ -16,29 +16,49 @@ const Navbar = () => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarCollapse">
+        <div className="collapse navbar-collapse collpase" id="navbarCollapse">
           <ul className="navbar-nav ml-auto">
-            <li className="nav-item">
+            <li
+              className="nav-item"
+              data-toggle="collapse"
+              data-target="#navbarCollapse"
+            >
               <NavLink exact={true} to="/" className="nav-link">
                 প্রধান পাতা
               </NavLink>
             </li>
-            <li className="nav-item">
+            <li
+              className="nav-item"
+              data-toggle="collapse"
+              data-target="#navbarCollapse"
+            >
               <NavLink to="/travel" className="nav-link">
                 ভ্রমণিকা
               </NavLink>
             </li>
-            <li className="nav-item">
+            <li
+              className="nav-item"
+              data-toggle="collapse"
+              data-target="#navbarCollapse"
+            >
               <NavLink to="/books" className="nav-link">
                 মনের আনন্দ
               </NavLink>
             </li>
-            <li className="nav-item">
+            <li
+              className="nav-item"
+              data-toggle="collapse"
+              data-target="#navbarCollapse"
+            >
               <NavLink to="/miscl" className="nav-link">
                 টুকিটাকি
               </NavLink>
             </li>
-            <li className="nav-item">
+            <li
+              className="nav-item"
+              data-toggle="collapse"
+              data-target="#navbarCollapse"
+            >
               <NavLink to="/miscl" className="nav-link">
                 যোগাযোগ
               </NavLink>
