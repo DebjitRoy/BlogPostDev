@@ -18,11 +18,8 @@ const TravelItem = ({ data, postType }) => (
         <div className="col-lg-6 mt-4">
           <h2 className="card-title">{data.title}</h2>
           <p className="card-text">{data.gist}</p>
-          <Link
-            to={`/${postType}/${data._id}`}
-            className="btn btn-outline-secondary"
-          >
-            পড়ুন &rarr;
+          <Link to={`/${postType}/${data._id}`} className="btn btn-dark">
+            আরো পড়ুন
           </Link>
         </div>
       </div>

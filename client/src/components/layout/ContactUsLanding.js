@@ -23,7 +23,7 @@ const ContactUsLanding = () => {
                   alt=""
                   className="img-fluid rounded-circle w-50 mb-3"
                 />
-                <h1 className="text-primary pb-3">যুথীকা রায়</h1>
+                <h1 className="text-primary pb-3">যূথিকা রায়</h1>
                 <p className="lead">
                   আমি সাধারণ এক গৃহবধূ। ছাত্রী জীবন শেষ করেই বিয়ের পিঁড়িতে
                   বসেছি।পঁয়ত্রিশ বছর স্বামী পুত্র নিয়ে সংসার করে এখন প্রায় অবসর
