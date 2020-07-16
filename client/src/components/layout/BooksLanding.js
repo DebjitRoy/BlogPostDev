@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 // import { Link } from "react-router-dom";
 import axios from "axios";
 import TravelItem from "./TravelItem";
+import moment from "moment";
 
 const BooksLanding = () => {
   const [bookListState, changeBookListState] = useState(null);
@@ -93,10 +94,28 @@ const BooksLanding = () => {
 
       <section className="mt-4">
         <div className="container">
-          {bookListState &&
+          {/* {bookListState &&
             bookListState.map((card) => (
               <TravelItem data={card} key={card._id} postType="books" />
-            ))}
+            ))} */}
+
+          {bookListState && (
+            <ul className="timeline">
+              {bookListState.map((card) => (
+                <li>
+                  <div class="timeline-badge">
+                    <div className="date">
+                      {moment(card.createdAt).format("DD")}
+                    </div>
+                    <div className="month">
+                      {moment(card.createdAt).format("MMM")}
+                    </div>
+                  </div>
+                  <TravelItem data={card} key={card._id} postType="books" />
+                </li>
+              ))}
+            </ul>
+          )}
 
           {paginationState && paginationState.totalPage > 1 ? (
             <ul className="pagination justify-content-center mb-4">
