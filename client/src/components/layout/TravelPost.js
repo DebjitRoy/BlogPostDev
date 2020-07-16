@@ -1,11 +1,13 @@
 import React, { Fragment, useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
+import Spinner from "react-bootstrap/Spinner";
 
 const TravelPost = (props) => {
   const [postState, changePostState] = useState(null);
   const [commentsState, changeCommentsState] = useState([]);
   const [isCommentSubmitted, setFormSubmitted] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const [commentForm, updateCommentForm] = useState({
     title: "",
     description: "",
@@ -22,6 +24,7 @@ const TravelPost = (props) => {
         );
         changeCommentsState(comments.data.data);
         setFormSubmitted(false);
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -30,10 +33,12 @@ const TravelPost = (props) => {
 
   const commentSubmitted = async () => {
     try {
+      setLoading(true);
       await axios.post(
         `/api/posts/${props.match.params.id}/comments`,
         commentForm
       );
+      setLoading(false);
       setFormSubmitted(false);
     } catch (error) {
       console.log(error);
@@ -193,7 +198,13 @@ const TravelPost = (props) => {
                     className="btn"
                     onClick={commentSubmitted}
                   >
-                    Submit
+                    {isLoading ? (
+                      <Spinner animation="border" role="status">
+                        <span className="sr-only">Loading...</span>
+                      </Spinner>
+                    ) : (
+                      <span>Submit</span>
+                    )}
                   </button>
                 </form>
               </div>
