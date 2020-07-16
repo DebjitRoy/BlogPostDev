@@ -152,7 +152,7 @@ const TravelPost = (props) => {
               <div className="card-body">
                 <form>
                   <div className="form-group">
-                    <input
+                    {/* <input
                       className="form-control mb-2"
                       type="text"
                       placeholder="বিষয়"
@@ -164,11 +164,11 @@ const TravelPost = (props) => {
                           title: evt.target.value,
                         })
                       }
-                    />
+                    /> */}
                     <textarea
                       className="form-control mb-2"
                       rows="3"
-                      placeholder="বিস্তারিত মতামত"
+                      placeholder="আপনার মতামত"
                       maxLength="500"
                       value={commentForm.description}
                       onChange={(evt) =>
@@ -197,6 +197,7 @@ const TravelPost = (props) => {
                     type="submit"
                     className="btn"
                     onClick={commentSubmitted}
+                    disabled={!commentForm.username || !commentForm.description}
                   >
                     {isLoading ? (
                       <Spinner animation="border" role="status">
