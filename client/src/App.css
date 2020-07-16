@@ -118,7 +118,7 @@ body {
 .bg-light,
 .badge-light,
 .alert-light {
-  background: var(--light-color);
+  /* background: var(--light-color); */
   color: orange;
 }
 
@@ -126,7 +126,7 @@ body {
 .bg-dark,
 .badge-dark,
 .alert-dark {
-  background: var(--dark-color);
+  /* background: var(--dark-color); */
   color: #fff;
 }
 
@@ -134,7 +134,7 @@ body {
 .bg-danger,
 .badge-danger,
 .alert-danger {
-  background: var(--danger-color);
+  /* background: var(--danger-color); */
   color: #fff;
 }
 /* 
