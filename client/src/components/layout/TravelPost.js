@@ -4,17 +4,41 @@ import moment from "moment";
 
 const TravelPost = (props) => {
   const [postState, changePostState] = useState(null);
+  const [commentsState, changeCommentsState] = useState([]);
+  const [isCommentSubmitted, setFormSubmitted] = useState(false);
+  const [commentForm, updateCommentForm] = useState({
+    title: "",
+    description: "",
+    username: "",
+  });
   useEffect(() => {
     (async () => {
       try {
         const res = await axios.get(`/api/posts/${props.match.params.id}`);
         // console.log(res.data);
         changePostState(res.data);
+        const comments = await axios.get(
+          `/api/posts/${props.match.params.id}/comments`
+        );
+        changeCommentsState(comments.data.data);
+        setFormSubmitted(false);
       } catch (error) {
         console.log(error);
       }
     })();
-  }, []);
+  }, [isCommentSubmitted]);
+
+  const commentSubmitted = async () => {
+    try {
+      await axios.post(
+        `/api/posts/${props.match.params.id}/comments`,
+        commentForm
+      );
+      setFormSubmitted(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     postState && (
@@ -118,47 +142,82 @@ const TravelPost = (props) => {
               </div>
             </div> */}
 
-            {/* <div className="card my-4">
-              <h5 className="card-header">Leave a Comment:</h5>
+            <div className="comment-form card my-4">
+              <h5 className="card-header">মতামত জানান</h5>
               <div className="card-body">
                 <form>
                   <div className="form-group">
-                    <textarea className="form-control" rows="3"></textarea>
+                    <input
+                      className="form-control mb-2"
+                      type="text"
+                      placeholder="বিষয়"
+                      maxLength="100"
+                      value={commentForm.title}
+                      onChange={(evt) =>
+                        updateCommentForm({
+                          ...commentForm,
+                          title: evt.target.value,
+                        })
+                      }
+                    />
+                    <textarea
+                      className="form-control mb-2"
+                      rows="3"
+                      placeholder="বিস্তারিত মতামত"
+                      maxLength="500"
+                      value={commentForm.description}
+                      onChange={(evt) =>
+                        updateCommentForm({
+                          ...commentForm,
+                          description: evt.target.value,
+                        })
+                      }
+                    ></textarea>
+
+                    <input
+                      className="form-control "
+                      type="text"
+                      placeholder="আপনার নাম"
+                      maxLength="100"
+                      value={commentForm.username}
+                      onChange={(evt) =>
+                        updateCommentForm({
+                          ...commentForm,
+                          username: evt.target.value,
+                        })
+                      }
+                    />
                   </div>
-                  <button type="submit" className="btn btn-primary">
+                  <button
+                    type="submit"
+                    className="btn"
+                    onClick={commentSubmitted}
+                  >
                     Submit
                   </button>
                 </form>
               </div>
             </div>
 
-            <div className="media mb-4">
-              <img
-                className="d-flex mr-3 rounded-circle"
-                src="http://placehold.it/50x50"
-                alt=""
-              />
-              <div className="media-body">
-                <h5 className="mt-0">Commenter 1</h5>
-                আজ সারারেন ফঘারা হড়লা ফডথ ভযারল। আযররড়জানা আর ফনভাো রাড়জযর
-                সীমান্ত অঞ্চল জড়ুে এই ফডথ ভযারল। রমলরেটাস ফথড়ক ফভার োঁচটায়
-                ফব্ররড়য় সাড়ে ব্াড়রাটা নাোে ফডথ ভযারলর এরি েড়য়ড়ন্ট এড়স ফেৌৌঁিলাম
-              </div>
-            </div>
-
-            <div className="media mb-4">
-              <img
-                className="d-flex mr-3 rounded-circle"
-                src="http://placehold.it/50x50"
-                alt=""
-              />
-              <div className="media-body">
-                <h5 className="mt-0">Commenter 2</h5>
-                আজ সারারেন ফঘারা হড়লা ফডথ ভযারল। আযররড়জানা আর ফনভাো রাড়জযর
-                সীমান্ত অঞ্চল জড়ুে এই ফডথ ভযারল। রমলরেটাস ফথড়ক ফভার োঁচটায়
-                ফব্ররড়য় সাড়ে ব্াড়রাটা নাোে ফডথ ভযারলর এরি েড়য়ড়ন্ট এড়স ফেৌৌঁিলাম
-              </div>
-            </div> */}
+            {commentsState &&
+              commentsState.length > 0 &&
+              commentsState.map((comment) => (
+                <div className="media mb-4" key={comment._id}>
+                  <div className="mr-3 rounded-circle comment-icon">
+                    <div className="icon-day">
+                      {moment(postState.data.createdAt).format("DD")}
+                    </div>
+                    <div className="icon-mon">
+                      {moment(postState.data.createdAt).format("MMM")}
+                    </div>
+                  </div>
+                  <div className="media-body">
+                    <h5 className="mt-0">{comment.title}</h5>
+                    <blockquote>{comment.description}</blockquote>
+                    <cite> - {comment.username}</cite>
+                  </div>
+                </div>
+              ))}
           </div>
         </section>
       </Fragment>

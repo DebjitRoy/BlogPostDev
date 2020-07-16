@@ -15,6 +15,7 @@ dotenv.config({ path: "./config/config.env" });
 connectDB();
 
 const postsRoute = require("./routes/posts");
+const commentsRoute = require("./routes/comments");
 
 dotenv.config({ path: "./config/config.env" });
 
@@ -32,6 +33,7 @@ app.use(express.json()); // adds json-parser
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/api/posts", postsRoute);
+app.use("/api/comments", commentsRoute);
 
 app.use(errorHandler);
 

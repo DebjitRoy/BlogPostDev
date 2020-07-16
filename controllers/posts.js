@@ -134,7 +134,7 @@ module.exports.updatePost = async (req, res, next) => {
     }
     res.status(400).json({ success: false });
   } catch (error) {
-    next(new ErrorResponse(`Bootcamp ID ${req.params.id} not found`, 404));
+    next(new ErrorResponse(`Post ID ${req.params.id} not found`, 404));
   }
 };
 
@@ -148,7 +148,7 @@ module.exports.deletePost = async (req, res, next) => {
     res.status(400).json({ success: false });
   } catch (error) {
     console.log(error);
-    next(new ErrorResponse(`Bootcamp ID ${req.params.id} not found`, 404));
+    next(new ErrorResponse(`Post ID ${req.params.id} not found`, 404));
   }
 };
 

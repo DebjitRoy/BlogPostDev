@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
+const commentsRouter = require("./comments");
+
 const {
   getPost,
   getPosts,
@@ -11,6 +13,9 @@ const {
   uploadSectionPhoto,
   getPostsCount,
 } = require("../controllers/posts");
+
+// Re-route into other router
+router.use("/:postId/comments", commentsRouter);
 
 router.route("/").get(getPosts).post(createPost);
 router.route("/count").get(getPostsCount);

@@ -251,3 +251,29 @@ body {
 #authors .card P {
   min-height: 220px;
 }
+
+.comment-icon {
+  background: #3292a6;
+  color: #fff;
+  height: 3rem;
+  width: 3rem;
+}
+
+.icon-day {
+  font-size: 1.5em;
+  text-align: center;
+}
+.icon-mon {
+  font-size: 1em;
+  margin-top: -10px;
+  text-align: center;
+}
+
+.comment-form .card-header {
+  background: #3292a6;
+  color: #fff;
+}
+.comment-form button {
+  background: #3292a6;
+  color: #fff;
+}
