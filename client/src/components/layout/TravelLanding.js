@@ -95,7 +95,7 @@ const TravelLanding = () => {
         </div>
       </section>
 
-      <section className="mt-4">
+      <section>
         <div className="container">
           {travelListState && (
             <ul className="timeline">

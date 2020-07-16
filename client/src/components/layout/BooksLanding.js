@@ -92,7 +92,7 @@ const BooksLanding = () => {
         </div>
       </section>
 
-      <section className="mt-4">
+      <section>
         <div className="container">
           {/* {bookListState &&
             bookListState.map((card) => (
