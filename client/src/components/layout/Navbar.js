@@ -50,6 +50,7 @@ const Navbar = () => {
               className="nav-item"
               data-toggle="collapse"
               data-target="#navbarCollapse"
+              onClick={() => changeExpanded(!isNavExpanded)}
             >
               <NavLink exact={true} to="/" className="nav-link">
                 প্রধান পাতা
@@ -59,6 +60,7 @@ const Navbar = () => {
               className="nav-item"
               data-toggle="collapse"
               data-target="#navbarCollapse"
+              onClick={() => changeExpanded(!isNavExpanded)}
             >
               <NavLink to="/travel" className="nav-link">
                 ভ্রমণিকা
@@ -68,6 +70,7 @@ const Navbar = () => {
               className="nav-item"
               data-toggle="collapse"
               data-target="#navbarCollapse"
+              onClick={() => changeExpanded(!isNavExpanded)}
             >
               <NavLink to="/books" className="nav-link">
                 মনের আনন্দ
@@ -77,6 +80,7 @@ const Navbar = () => {
               className="nav-item"
               data-toggle="collapse"
               data-target="#navbarCollapse"
+              onClick={() => changeExpanded(!isNavExpanded)}
             >
               <NavLink to="/miscl" className="nav-link">
                 টুকিটাকি
@@ -86,6 +90,7 @@ const Navbar = () => {
               className="nav-item"
               data-toggle="collapse"
               data-target="#navbarCollapse"
+              onClick={() => changeExpanded(!isNavExpanded)}
             >
               <NavLink to="/contactus" className="nav-link">
                 যোগাযোগ

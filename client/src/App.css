@@ -487,3 +487,16 @@ body {
   background-color: #fff !important;
   border: none !important;
 }
+
+.centered-container {
+  text-align: center;
+}
+.loading-lg {
+  width: 5rem !important;
+  height: 5rem !important;
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+}
+.loading {
+  min-height: 200px;
+}

@@ -3,18 +3,22 @@ import React, { Fragment, useState, useEffect } from "react";
 import axios from "axios";
 import TravelItem from "./TravelItem";
 import moment from "moment";
+import Spinner from "react-bootstrap/Spinner";
 
 const SearchLanding = (props) => {
   const [searchListState, changeSearchListState] = useState(null);
+  const [isLoading, setLoading] = useState(false);
   // const [paginationState, changePaginationState] = useState(null);
   const [currentPage, changeCurrentPage] = useState(1);
   useEffect(() => {
     (async () => {
       try {
+        setLoading(true);
         const res = await axios.get(
           `/api/posts?searchBy[in]=${props.match.params.search}`
         );
         changeSearchListState(res.data.data);
+        setLoading(false);
         // changePaginationState(res.data.pagination);
       } catch (error) {
         console.log(error);
@@ -34,23 +38,36 @@ const SearchLanding = (props) => {
       </header>
 
       <section>
-        <div className="container">
-          {searchListState && (
-            <ul className="timeline">
-              {searchListState.map((card) => (
-                <li>
-                  <div class="timeline-badge">
-                    <div className="date">
-                      {moment(card.createdAt).format("DD")}
+        <div className="container centered-container">
+          {isLoading ? (
+            <div className="loading">
+              <Spinner
+                animation="grow"
+                role="status"
+                size="l"
+                className="loading-lg"
+              >
+                <span className="sr-only">Loading...</span>
+              </Spinner>
+            </div>
+          ) : (
+            searchListState && (
+              <ul className="timeline">
+                {searchListState.map((card) => (
+                  <li>
+                    <div class="timeline-badge">
+                      <div className="date">
+                        {moment(card.createdAt).format("DD")}
+                      </div>
+                      <div className="month">
+                        {moment(card.createdAt).format("MMM")}
+                      </div>
                     </div>
-                    <div className="month">
-                      {moment(card.createdAt).format("MMM")}
-                    </div>
-                  </div>
-                  <TravelItem data={card} key={card._id} postType="travel" />
-                </li>
-              ))}
-            </ul>
+                    <TravelItem data={card} key={card._id} postType="travel" />
+                  </li>
+                ))}
+              </ul>
+            )
           )}
         </div>
       </section>
