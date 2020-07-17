@@ -33,7 +33,7 @@ body {
 
 .carousel-image {
   background-size: cover;
-  filter: grayscale(80%);
+  /* filter: grayscale(80%); */
 }
 
 .dark-overlay {

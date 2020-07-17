@@ -3,11 +3,16 @@ import axios from "axios";
 import moment from "moment";
 import Spinner from "react-bootstrap/Spinner";
 
+import ImageModal from "./ImageModal";
+
 const TravelPost = (props) => {
   const [postState, changePostState] = useState(null);
   const [commentsState, changeCommentsState] = useState([]);
   const [isCommentSubmitted, setFormSubmitted] = useState(false);
   const [isLoading, setLoading] = useState(false);
+  const [isOpenImage, setOpenImage] = useState(false);
+  const [currentImage, setCurrentImage] = useState(null);
+
   const [commentForm, updateCommentForm] = useState({
     title: "",
     description: "",
@@ -43,6 +48,10 @@ const TravelPost = (props) => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const closeImage = () => {
+    setOpenImage(false);
   };
 
   return (
@@ -121,6 +130,10 @@ const TravelPost = (props) => {
                               alt=""
                               className="img-fluid"
                               src={`https://bengali-blog-static-uploads.s3.amazonaws.com/${section.image}`}
+                              onClick={() => {
+                                setCurrentImage(section.image);
+                                setOpenImage(true);
+                              }}
                             />
                           </div>
                           {section.imgDescription ? (
@@ -232,6 +245,12 @@ const TravelPost = (props) => {
               ))}
           </div>
         </section>
+
+        <ImageModal
+          isOpen={isOpenImage}
+          onHide={closeImage}
+          image={currentImage}
+        />
       </Fragment>
     )
   );
