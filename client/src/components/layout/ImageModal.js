@@ -1,14 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import Image from "react-bootstrap/Image";
-// import axios from "axios";
 import Modal from "react-bootstrap/Modal";
 import ModalBody from "react-bootstrap/ModalBody";
 
-const ImageModal = ({ isOpen, onHide, image }) => (
-  <Modal show={isOpen} centered size="lg">
-    <ModalBody onClick={onHide}>
+const ImageModal = (props) => (
+  <Modal {...props} show={props.show} centered size="lg">
+    <ModalBody className="image-modal" onClick={props.onHide}>
       <Image
-        src={`https://bengali-blog-static-uploads.s3.amazonaws.com/${image}`}
+        src={`https://bengali-blog-static-uploads.s3.amazonaws.com/${props.image}`}
         fluid
       />
     </ModalBody>

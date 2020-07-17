@@ -61,18 +61,10 @@ const TravelPost = (props) => {
           <div className="container">
             <h1 className="mt-4 mb-3">{postState.data.title}</h1>
 
-            {/* <ol className="breadcrumb">
-              <li className="breadcrumb-item">
-                <a href="index.html">প্রধান পাতা</a>
-              </li>
-              <li className="breadcrumb-item active">ভ্রমণিকা</li>
-            </ol> */}
-
             <div className="row">
               <div className="col-lg-8 centered">
                 <img
                   className="img-fluid rounded"
-                  // src={`/uploads/${postState.data.photoHero}`}
                   src={`https://bengali-blog-static-uploads.s3.amazonaws.com/${postState.data.photoHero}`}
                   alt=""
                 />
@@ -137,7 +129,7 @@ const TravelPost = (props) => {
                             />
                           </div>
                           {section.imgDescription ? (
-                            <div className="card-footer">
+                            <div className="card-footer section-image-footer">
                               {section.imgDescription}
                             </div>
                           ) : null}
@@ -247,7 +239,7 @@ const TravelPost = (props) => {
         </section>
 
         <ImageModal
-          isOpen={isOpenImage}
+          show={isOpenImage}
           onHide={closeImage}
           image={currentImage}
         />

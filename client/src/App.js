@@ -15,6 +15,7 @@ import AdminNavbar from "./admin/AdminNavbar";
 import AdminDashboard from "./admin/Dashboard";
 import TravelPostEdit from "./admin/TravelPostEdit";
 import ContactUsLanding from "./components/layout/ContactUsLanding";
+import SearchLanding from "./components/layout/SearchLanding";
 
 const App = () => (
   <Router>
@@ -32,6 +33,8 @@ const App = () => (
 
         <Route exact path="/books" component={BooksLanding} />
         <Route exact path="/miscl" component={MisclLanding} />
+        <Route exact path="/contactus" component={ContactUsLanding} />
+        <Route exact path="/search/:search" component={SearchLanding} />
         {/* <Route exact path="/books/:id" component={TravelPost} /> */}
 
         <Route exact path="/upload" component={PostForm} />
@@ -41,7 +44,6 @@ const App = () => (
         <Route exact path="/admin/login" component={LoginPage} />
         <Route exact path="/admin/dashboard" component={AdminDashboard} />
         <Route exact path="/admin/postedit/:id" component={TravelPostEdit} />
-        <Route exact path="/contactus" component={ContactUsLanding} />
       </Switch>
       <Footer />
     </Fragment>

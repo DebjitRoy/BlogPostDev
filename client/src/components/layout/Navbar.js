@@ -1,18 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
+  const [searchText, changeSearch] = useState("");
+  const [isNavExpanded, changeExpanded] = useState(false);
+
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark navbar-main">
       <div className="container">
         <Link to="/" className="navbar-brand">
-          {/* <i className="fas fa-road"></i> */}
           <img src="/uploads/window.png"></img>
         </Link>
+        {!isNavExpanded ? (
+          <div className="search-box">
+            <input
+              type="text"
+              className="search-txt"
+              placeholder="Search in English"
+              value={searchText}
+              onChange={(evt) => changeSearch(evt.target.value)}
+            />
+
+            <a className="search-btn" onClick={() => changeSearch("")}>
+              {searchText.length ? (
+                <Link
+                  to={`/search/${searchText.toLowerCase().replace(" ", "%20")}`}
+                >
+                  <i className="fas fa-search"></i>
+                </Link>
+              ) : (
+                <i className="fas fa-search"></i>
+              )}
+            </a>
+          </div>
+        ) : null}
+
         <button
           className="navbar-toggler"
           data-toggle="collapse"
           data-target="#navbarCollapse"
+          onClick={() => changeExpanded(!isNavExpanded)}
         >
           <span className="navbar-toggler-icon"></span>
         </button>
