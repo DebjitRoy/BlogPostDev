@@ -222,10 +222,10 @@ const TravelPost = (props) => {
                 <div className="media mb-4" key={comment._id}>
                   <div className="mr-3 rounded-circle comment-icon">
                     <div className="icon-day">
-                      {moment(postState.data.createdAt).format("DD")}
+                      {moment(comment.createdAt).format("DD")}
                     </div>
                     <div className="icon-mon">
-                      {moment(postState.data.createdAt).format("MMM")}
+                      {moment(comment.createdAt).format("MMM")}
                     </div>
                   </div>
                   <div className="media-body">
