@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
@@ -9,7 +8,11 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark navbar-main">
       <div className="container">
-        <Link to="/" className="navbar-brand">
+        <Link
+          to="/"
+          className="navbar-brand"
+          onClick={() => changeExpanded(!isNavExpanded)}
+        >
           <img src="/uploads/window.png"></img>
         </Link>
         {!isNavExpanded ? (

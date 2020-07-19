@@ -6,7 +6,7 @@ const Footer = () => (
       <div className="row">
         <div className="col">
           <p>
-            Copyright &copy; <span id="year">2020</span> বাতায়ন
+            Copyright &copy; <span id="year">2020</span> amarbatayan
           </p>
         </div>
       </div>
