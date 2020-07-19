@@ -21,6 +21,13 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, "Please add a Passport"],
+    minlength: 6,
+    select: false,
+  },
+  resetPasswordToken: String,
+  createdAt: {
+    type: Date,
+    default: Date.now,
   },
 });
 

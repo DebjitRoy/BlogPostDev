@@ -7,14 +7,6 @@ const {
   addComment,
   deleteComment,
   updateComment,
-
-  // getPosts,
-  // createPost,
-  // updatePost,
-  // deletePost,
-  // uploadPhotoPost,
-  // uploadSectionPhoto,
-  // getPostsCount,
 } = require("../controllers/comments");
 
 router.route("/").get(getComments).post(addComment);

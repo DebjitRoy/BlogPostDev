@@ -16,6 +16,7 @@ connectDB();
 
 const postsRoute = require("./routes/posts");
 const commentsRoute = require("./routes/comments");
+const authRoute = require("./routes/auth");
 
 dotenv.config({ path: "./config/config.env" });
 
@@ -34,6 +35,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/api/posts", postsRoute);
 app.use("/api/comments", commentsRoute);
+app.use("/api/auth", authRoute);
 
 app.use(errorHandler);
 
