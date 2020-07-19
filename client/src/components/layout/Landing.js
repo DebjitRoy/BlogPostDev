@@ -64,7 +64,7 @@ const Landing = () => {
               </Link>
             </div> */}
             <div className="col-md-4 mb-4 text-center">
-              <div className="card  ">
+              <div className="menu-card ">
                 <div className="box">
                   <Link className="menu-tile" to="/travel">
                     <div>
@@ -85,7 +85,7 @@ const Landing = () => {
             </div>
 
             <div className="col-md-4 mb-4 text-center">
-              <div className="card  ">
+              <div className="menu-card ">
                 <div className="box">
                   <Link className="menu-tile" to="/books">
                     <div>
@@ -106,7 +106,7 @@ const Landing = () => {
             </div>
 
             <div className="col-md-4 mb-4 text-center">
-              <div className="card ">
+              <div className="menu-card">
                 <div className="box">
                   <Link className="menu-tile" to="/miscl">
                     <div>
