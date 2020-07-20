@@ -12,6 +12,7 @@ const typeMapper = {
   content: "Section",
   sectionImage: "Section Image",
   post: "Post",
+  comment: "Comment",
 };
 const DeleteModal = ({
   isOpen,

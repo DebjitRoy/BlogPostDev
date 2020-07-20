@@ -15,7 +15,8 @@ const TravelPostEdit = (props) => {
   const [editSectionIdx, setEditingSection] = useState(null);
   const [isDeleteModalOpen, changeDeleteModalOpen] = useState(false);
   const [showAddSection, setAddSection] = useState(false);
-  // const [isFormSubmitted, setFormSubmitted] = useState(false);
+  const [commentsState, changeCommentsState] = useState([]);
+
   const history = useHistory();
   useEffect(() => {
     loadPostData();
@@ -29,6 +30,10 @@ const TravelPostEdit = (props) => {
       if (res.data) {
         changeFormState(res.data.data);
       }
+      const comments = await axios.get(
+        `/api/posts/${props.match.params.id}/comments`
+      );
+      changeCommentsState(comments.data.data);
       setEditState(null);
       // setFormSubmitted(false);
     } catch (error) {
@@ -153,6 +158,8 @@ const TravelPostEdit = (props) => {
         image: null,
         imgDescription: null,
       };
+    } else if (editingState === "comment") {
+      await axios.delete(`/api/comments/${editSectionIdx}`);
     } else {
       updatedSection.splice(editSectionIdx, 1);
     }
@@ -730,6 +737,34 @@ const TravelPostEdit = (props) => {
                 </div>
               ) : null}
             </div>
+            {commentsState &&
+              commentsState.length > 0 &&
+              commentsState.map((comment) => (
+                <div className="media mb-4" key={comment._id}>
+                  <i
+                    className="icon fas fa-trash px-2"
+                    // removeSection(idx)
+                    onClick={() => {
+                      setEditState("comment");
+                      setEditingSection(comment._id);
+                      changeDeleteModalOpen(true);
+                    }}
+                  ></i>
+                  <div className="mr-3 rounded-circle comment-icon">
+                    <div className="icon-day">
+                      {moment(comment.createdAt).format("DD")}
+                    </div>
+                    <div className="icon-mon">
+                      {moment(comment.createdAt).format("MMM")}
+                    </div>
+                  </div>
+                  <div className="media-body">
+                    <h5 className="mt-0">{comment.title}</h5>
+                    <blockquote>{comment.description}</blockquote>
+                    <cite> - {comment.username}</cite>
+                  </div>
+                </div>
+              ))}
           </div>
         </section>
         <DeleteModal
