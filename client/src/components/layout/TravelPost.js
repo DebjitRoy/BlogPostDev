@@ -151,22 +151,29 @@ const TravelPost = (props) => {
                               ) : null}
                             </div>
                           ) : null}
+                          {section.video && section.video.length ? (
+                            <div className="card col-md-8 centered">
+                              <div className="card-body section-image">
+                                <div className="embed-responsive embed-responsive-16by9">
+                                  <iframe
+                                    className="embed-responsive-item"
+                                    src={`https://www.youtube.com/embed/${section.video}`}
+                                  ></iframe>
+                                </div>
+                              </div>
+                              {section.videoDescription ? (
+                                <div className="card-footer section-image-footer">
+                                  {section.videoDescription}
+                                </div>
+                              ) : null}
+                            </div>
+                          ) : null}
                         </div>
                       ))
                     : null}
                 </div>
 
                 <hr />
-                {/* <div className="d-block d-sm-none card mb-4">
-  <h5 className="card-header">Give a Like</h5>
-  <div className="card-body">
-    পোস্টটি ভালোলাগলে Like ও Share করুন
-    <div className="visited-card d-flex justify-content-center">
-      <i className="fas fa-thumbs-up p-3"></i>
-      <i className="fas fa-share-alt p-3"></i>
-    </div>
-  </div>
-</div> */}
 
                 <div className="comment-form card my-4">
                   <h5 className="card-header">মতামত জানান</h5>

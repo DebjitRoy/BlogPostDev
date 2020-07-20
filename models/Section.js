@@ -12,7 +12,12 @@ const SectionSchema = new mongoose.Schema({
   image: String,
   imgDescription: {
     type: String,
-    maxlength: [100, "Section Header can't be more than 150 characters"],
+    maxlength: [100, "Image Description can't be more than 150 characters"],
+  },
+  video: String,
+  videoDescription: {
+    type: String,
+    maxlength: [100, "Video Description can't be more than 150 characters"],
   },
 });
 

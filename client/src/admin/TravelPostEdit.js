@@ -462,6 +462,7 @@ const TravelPostEdit = (props) => {
                               name="editor1"
                               className="form-control"
                               placeholder="Section Body"
+                              rows="6"
                               value={
                                 (formState.content[editSectionIdx] &&
                                   formState.content[editSectionIdx].content) ||
@@ -476,6 +477,50 @@ const TravelPostEdit = (props) => {
                                 );
                               }}
                             ></textarea>
+                            <hr />
+                            <h5>Section Video:</h5>
+                            <div className="row mt-3">
+                              <div className="col-md-3">
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Section Video id"
+                                  value={
+                                    (formState.content[editSectionIdx] &&
+                                      formState.content[editSectionIdx]
+                                        .video) ||
+                                    ""
+                                  }
+                                  onChange={(evt) => {
+                                    onEditSection(
+                                      "video",
+                                      formState.content[editSectionIdx],
+                                      evt.target.value
+                                    );
+                                  }}
+                                />
+                              </div>
+                              <div className="col-md-9">
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Section Video Description (max 100 char)"
+                                  value={
+                                    (formState.content[editSectionIdx] &&
+                                      formState.content[editSectionIdx]
+                                        .videoDescription) ||
+                                    ""
+                                  }
+                                  onChange={(evt) => {
+                                    onEditSection(
+                                      "videoDescription",
+                                      formState.content[editSectionIdx],
+                                      evt.target.value
+                                    );
+                                  }}
+                                />
+                              </div>
+                            </div>
                           </div>
                           <div className="card-footer">
                             <button
@@ -500,6 +545,14 @@ const TravelPostEdit = (props) => {
                             <b>{section.header}</b>
                           </p>
                           <p>{section.content}</p>
+                          {section.video ? (
+                            <div>
+                              <h5>Video</h5>
+                              <p>
+                                ID: {section.video} | {section.videoDescription}
+                              </p>
+                            </div>
+                          ) : null}
                         </div>
                       ) : null}
 
@@ -527,6 +580,7 @@ const TravelPostEdit = (props) => {
                               name="editor1"
                               className="form-control"
                               placeholder="Section Body"
+                              rows="6"
                               value={formState.content[idx].content || ""}
                               onChange={(evt) =>
                                 onEditSection(
@@ -536,6 +590,50 @@ const TravelPostEdit = (props) => {
                                 )
                               }
                             ></textarea>
+                            <hr />
+                            <h5>Section Video:</h5>
+                            <div className="row mt-3">
+                              <div className="col-md-3">
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Section Video id"
+                                  value={
+                                    (formState.content[editSectionIdx] &&
+                                      formState.content[editSectionIdx]
+                                        .video) ||
+                                    ""
+                                  }
+                                  onChange={(evt) => {
+                                    onEditSection(
+                                      "video",
+                                      formState.content[editSectionIdx],
+                                      evt.target.value
+                                    );
+                                  }}
+                                />
+                              </div>
+                              <div className="col-md-9">
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Section Video Description (max 100 char)"
+                                  value={
+                                    (formState.content[editSectionIdx] &&
+                                      formState.content[editSectionIdx]
+                                        .videoDescription) ||
+                                    ""
+                                  }
+                                  onChange={(evt) => {
+                                    onEditSection(
+                                      "videoDescription",
+                                      formState.content[editSectionIdx],
+                                      evt.target.value
+                                    );
+                                  }}
+                                />
+                              </div>
+                            </div>
                           </div>
                           <div className="card-footer">
                             <button
@@ -705,6 +803,7 @@ const TravelPostEdit = (props) => {
                       name="editor1"
                       className="form-control"
                       placeholder="Section Body"
+                      rows="6"
                       value={
                         (formState.content[editSectionIdx] &&
                           formState.content[editSectionIdx].content) ||
@@ -719,6 +818,49 @@ const TravelPostEdit = (props) => {
                         );
                       }}
                     ></textarea>
+                    <hr />
+                    <h5>Section Video:</h5>
+                    <div className="row mt-3">
+                      <div className="col-md-3">
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Section Video id"
+                          value={
+                            (formState.content[editSectionIdx] &&
+                              formState.content[editSectionIdx].video) ||
+                            ""
+                          }
+                          onChange={(evt) => {
+                            onEditSection(
+                              "video",
+                              formState.content[editSectionIdx],
+                              evt.target.value
+                            );
+                          }}
+                        />
+                      </div>
+                      <div className="col-md-9">
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Section Video Description (max 100 char)"
+                          value={
+                            (formState.content[editSectionIdx] &&
+                              formState.content[editSectionIdx]
+                                .videoDescription) ||
+                            ""
+                          }
+                          onChange={(evt) => {
+                            onEditSection(
+                              "videoDescription",
+                              formState.content[editSectionIdx],
+                              evt.target.value
+                            );
+                          }}
+                        />
+                      </div>
+                    </div>
                   </div>
                   <div className="card-footer">
                     <button

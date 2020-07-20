@@ -25,6 +25,8 @@ const CreatePostModal = ({ isOpen, closeModal }) => {
         content: null,
         image: null,
         imgDescription: null,
+        video: null,
+        videoDescription: null,
       },
     ],
     gist: "",
@@ -223,6 +225,7 @@ const CreatePostModal = ({ isOpen, closeModal }) => {
               <small className="form-text text-muted">Max Size 300KB</small>
               {/* <img className="image-preview" src={previewCoverImg} /> */}
             </div>
+
             <label htmlFor="gist">Post Gist</label>
             <textarea
               name="editor1"
@@ -303,6 +306,30 @@ const CreatePostModal = ({ isOpen, closeModal }) => {
                       updateSection("imgDescription", evt.target.value, idx)
                     }
                   />
+
+                  <div className="form-group">
+                    <label htmlFor="tags">YouTube Video ID</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={section.video || ""}
+                      onChange={(evt) =>
+                        updateSection("video", evt.target.value, idx)
+                      }
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="tags">YouTube Video Description</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      maxLength="100"
+                      value={section.videoDescription || ""}
+                      onChange={(evt) =>
+                        updateSection("videoDescription", evt.target.value, idx)
+                      }
+                    />
+                  </div>
                 </div>
 
                 <hr />
