@@ -18,6 +18,7 @@ const Landing = () => {
           "/api/posts?limit=3&select=title,gist,postType,photoHero"
         );
         changeCarousalState(res.data.data, () => console.log(carosalState));
+        window.scrollTo(0, 0);
       } catch (error) {
         console.log(error);
       }

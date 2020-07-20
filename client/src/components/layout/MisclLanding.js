@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
-// import { Link } from "react-router-dom";
+import Spinner from "react-bootstrap/Spinner";
 import axios from "axios";
 import TravelItem from "./TravelItem";
 import moment from "moment";
@@ -8,19 +8,27 @@ const MisclLanding = () => {
   const [misclListState, changeMisclListState] = useState(null);
   const [paginationState, changePaginationState] = useState(null);
   const [currentPage, changeCurrentPage] = useState(1);
+  const [isLoading, setLoading] = useState(false);
+
   useEffect(() => {
     (async () => {
       try {
+        setLoading(true);
         const res = await axios.get(
           `/api/posts?postType=miscl&limit=5&page=${currentPage}&select=title,gist,photoHero,createdAt`
         );
         changeMisclListState(res.data.data);
         changePaginationState(res.data.pagination);
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
     })();
   }, [currentPage]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <Fragment>
       <header id="page-header">
@@ -72,60 +80,70 @@ const MisclLanding = () => {
       </section>
 
       <section>
-        <div className="container">
-          {/* {misclListState &&
-            misclListState.map((card) => (
-              <TravelItem data={card} key={card._id} postType="miscl" />
-            ))} */}
+        <div className="container centered-container">
+          {isLoading ? (
+            <div className="loading">
+              <Spinner
+                animation="grow"
+                role="status"
+                size="l"
+                className="loading-lg"
+              >
+                <span className="sr-only">Loading...</span>
+              </Spinner>
+            </div>
+          ) : (
+            <Fragment>
+              {misclListState && (
+                <ul className="timeline">
+                  {misclListState.map((card) => (
+                    <li>
+                      <div class="timeline-badge">
+                        <div className="date">
+                          {moment(card.createdAt).format("DD")}
+                        </div>
+                        <div className="month">
+                          {moment(card.createdAt).format("MMM")}
+                        </div>
+                      </div>
+                      <TravelItem data={card} key={card._id} postType="miscl" />
+                    </li>
+                  ))}
+                </ul>
+              )}
 
-          {misclListState && (
-            <ul className="timeline">
-              {misclListState.map((card) => (
-                <li>
-                  <div class="timeline-badge">
-                    <div className="date">
-                      {moment(card.createdAt).format("DD")}
+              {paginationState && paginationState.totalPage > 1 ? (
+                <ul className="pagination justify-content-center mb-4">
+                  <li
+                    className={`page-item ${
+                      !paginationState.prev ? "disabled" : null
+                    }`}
+                  >
+                    <div
+                      className="page-link"
+                      onClick={() => changeCurrentPage(currentPage - 1)}
+                    >
+                      &larr; Older
                     </div>
-                    <div className="month">
-                      {moment(card.createdAt).format("MMM")}
+                  </li>
+                  <li
+                    className={`page-item ${
+                      !paginationState.next ? "disabled" : null
+                    }`}
+                  >
+                    <div
+                      className="page-link"
+                      onClick={() => {
+                        changeCurrentPage(currentPage + 1);
+                      }}
+                    >
+                      Newer &rarr;
                     </div>
-                  </div>
-                  <TravelItem data={card} key={card._id} postType="miscl" />
-                </li>
-              ))}
-            </ul>
+                  </li>
+                </ul>
+              ) : null}
+            </Fragment>
           )}
-
-          {paginationState && paginationState.totalPage > 1 ? (
-            <ul className="pagination justify-content-center mb-4">
-              <li
-                className={`page-item ${
-                  !paginationState.prev ? "disabled" : null
-                }`}
-              >
-                <div
-                  className="page-link"
-                  onClick={() => changeCurrentPage(currentPage - 1)}
-                >
-                  &larr; Older
-                </div>
-              </li>
-              <li
-                className={`page-item ${
-                  !paginationState.next ? "disabled" : null
-                }`}
-              >
-                <div
-                  className="page-link"
-                  onClick={() => {
-                    changeCurrentPage(currentPage + 1);
-                  }}
-                >
-                  Newer &rarr;
-                </div>
-              </li>
-            </ul>
-          ) : null}
         </div>
       </section>
     </Fragment>

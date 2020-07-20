@@ -10,6 +10,7 @@ const TravelPost = (props) => {
   const [commentsState, changeCommentsState] = useState([]);
   const [isCommentSubmitted, setFormSubmitted] = useState(false);
   const [isLoading, setLoading] = useState(false);
+  const [isMainLoading, setMainLoading] = useState(false);
   const [isOpenImage, setOpenImage] = useState(false);
   const [currentImage, setCurrentImage] = useState(null);
 
@@ -21,6 +22,7 @@ const TravelPost = (props) => {
   useEffect(() => {
     (async () => {
       try {
+        setMainLoading(true);
         const res = await axios.get(`/api/posts/${props.match.params.id}`);
         // console.log(res.data);
         changePostState(res.data);
@@ -30,6 +32,7 @@ const TravelPost = (props) => {
         changeCommentsState(comments.data.data);
         setFormSubmitted(false);
         setLoading(false);
+        setMainLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -59,182 +62,199 @@ const TravelPost = (props) => {
       <Fragment>
         <section className="post-detail">
           <div className="container">
-            <h1 className="mt-4 mb-3">{postState.data.title}</h1>
-
-            <div className="row">
-              <div className="col-lg-8 centered">
-                <img
-                  className="img-fluid rounded"
-                  src={`https://bengali-blog-static-uploads.s3.amazonaws.com/${postState.data.photoHero}`}
-                  alt=""
-                />
-
-                <hr />
-
-                <p>{`Posted on ${moment(postState.data.createdAt).format(
-                  "DD-MM-YYYY"
-                )}`}</p>
-                <p>{postState.data.additionalInfo}</p>
-                <hr />
+            {isMainLoading ? (
+              <div className="loading centered-container">
+                <Spinner
+                  animation="grow"
+                  role="status"
+                  size="l"
+                  className="loading-lg"
+                >
+                  <span className="sr-only">Loading...</span>
+                </Spinner>
               </div>
-              {/* <div className="col-md-4">
-                <div className="visited-card card mb-4">
-                  <h5 className="card-header">Visited</h5>
-                  <div className="card-body">
-                    <div className="row">
-                      <div className="col-6">
-                        <i className="far fa-eye"></i>
-                        <span>{postState.data.visited}</span>
-                      </div>
-                      <div className="col-6">
-                        <i className="far fa-heart"></i>
-                        <span>{postState.data.liked}</span>
-                      </div>
-                    </div>
+            ) : (
+              <Fragment>
+                <h1 className="mt-4 mb-3">{postState.data.title}</h1>
+
+                <div className="row">
+                  <div className="col-lg-8 centered">
+                    <img
+                      className="img-fluid rounded"
+                      src={`https://bengali-blog-static-uploads.s3.amazonaws.com/${postState.data.photoHero}`}
+                      alt=""
+                    />
+
+                    <hr />
+
+                    <p>{`Posted on ${moment(postState.data.createdAt).format(
+                      "DD-MM-YYYY"
+                    )}`}</p>
+                    <p>{postState.data.additionalInfo}</p>
+                    <hr />
                   </div>
+                  {/* <div className="col-md-4">
+    <div className="visited-card card mb-4">
+      <h5 className="card-header">Visited</h5>
+      <div className="card-body">
+        <div className="row">
+          <div className="col-6">
+            <i className="far fa-eye"></i>
+            <span>{postState.data.visited}</span>
+          </div>
+          <div className="col-6">
+            <i className="far fa-heart"></i>
+            <span>{postState.data.liked}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div className="d-sm-none d-md-block card mb-4">
+      <h5 className="card-header">Give a Like</h5>
+      <div className="card-body">
+        পোস্টটি ভালোলাগলে Like ও Share করুন
+        <div className="visited-card d-flex justify-content-center">
+          <i className="fas fa-thumbs-up p-3"></i>
+          <i className="fas fa-share-alt p-3"></i>
+        </div>
+      </div>
+    </div>
+  </div> */}
                 </div>
 
-                <div className="d-sm-none d-md-block card mb-4">
-                  <h5 className="card-header">Give a Like</h5>
-                  <div className="card-body">
-                    পোস্টটি ভালোলাগলে Like ও Share করুন
-                    <div className="visited-card d-flex justify-content-center">
-                      <i className="fas fa-thumbs-up p-3"></i>
-                      <i className="fas fa-share-alt p-3"></i>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
-            </div>
-
-            <div className="container my-4">
-              {postState.data.content
-                ? postState.data.content.map((section) => (
-                    <div key={section._id}>
-                      <p className="lead">
-                        <b>{section.header}</b>
-                      </p>
-                      <p>{section.content}</p>
-                      {section.image ? (
-                        <div className="card col-md-8 centered">
-                          <div className="card-body section-image">
-                            <img
-                              alt=""
-                              className="img-fluid"
-                              src={`https://bengali-blog-static-uploads.s3.amazonaws.com/${section.image}`}
-                              onClick={() => {
-                                setCurrentImage(section.image);
-                                setOpenImage(true);
-                              }}
-                            />
-                          </div>
-                          {section.imgDescription ? (
-                            <div className="card-footer section-image-footer">
-                              {section.imgDescription}
+                <div className="container my-4">
+                  {postState.data.content
+                    ? postState.data.content.map((section) => (
+                        <div key={section._id}>
+                          <p className="lead">
+                            <b>{section.header}</b>
+                          </p>
+                          <p>{section.content}</p>
+                          {section.image ? (
+                            <div className="card col-md-8 centered">
+                              <div className="card-body section-image">
+                                <img
+                                  alt=""
+                                  className="img-fluid"
+                                  src={`https://bengali-blog-static-uploads.s3.amazonaws.com/${section.image}`}
+                                  onClick={() => {
+                                    setCurrentImage(section.image);
+                                    setOpenImage(true);
+                                  }}
+                                />
+                              </div>
+                              {section.imgDescription ? (
+                                <div className="card-footer section-image-footer">
+                                  {section.imgDescription}
+                                </div>
+                              ) : null}
                             </div>
                           ) : null}
                         </div>
-                      ) : null}
-                    </div>
-                  ))
-                : null}
-            </div>
-
-            <hr />
-            {/* <div className="d-block d-sm-none card mb-4">
-              <h5 className="card-header">Give a Like</h5>
-              <div className="card-body">
-                পোস্টটি ভালোলাগলে Like ও Share করুন
-                <div className="visited-card d-flex justify-content-center">
-                  <i className="fas fa-thumbs-up p-3"></i>
-                  <i className="fas fa-share-alt p-3"></i>
+                      ))
+                    : null}
                 </div>
-              </div>
-            </div> */}
 
-            <div className="comment-form card my-4">
-              <h5 className="card-header">মতামত জানান</h5>
-              <div className="card-body">
-                <form>
-                  <div className="form-group">
-                    {/* <input
-                      className="form-control mb-2"
-                      type="text"
-                      placeholder="বিষয়"
-                      maxLength="100"
-                      value={commentForm.title}
-                      onChange={(evt) =>
-                        updateCommentForm({
-                          ...commentForm,
-                          title: evt.target.value,
-                        })
-                      }
-                    /> */}
-                    <textarea
-                      className="form-control mb-2"
-                      rows="3"
-                      placeholder="আপনার মতামত"
-                      maxLength="500"
-                      value={commentForm.description}
-                      onChange={(evt) =>
-                        updateCommentForm({
-                          ...commentForm,
-                          description: evt.target.value,
-                        })
-                      }
-                    ></textarea>
+                <hr />
+                {/* <div className="d-block d-sm-none card mb-4">
+  <h5 className="card-header">Give a Like</h5>
+  <div className="card-body">
+    পোস্টটি ভালোলাগলে Like ও Share করুন
+    <div className="visited-card d-flex justify-content-center">
+      <i className="fas fa-thumbs-up p-3"></i>
+      <i className="fas fa-share-alt p-3"></i>
+    </div>
+  </div>
+</div> */}
 
-                    <input
-                      className="form-control "
-                      type="text"
-                      placeholder="আপনার নাম"
-                      maxLength="100"
-                      value={commentForm.username}
-                      onChange={(evt) =>
-                        updateCommentForm({
-                          ...commentForm,
-                          username: evt.target.value,
-                        })
-                      }
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    className="btn"
-                    onClick={commentSubmitted}
-                    disabled={!commentForm.username || !commentForm.description}
-                  >
-                    {isLoading ? (
-                      <Spinner animation="border" role="status">
-                        <span className="sr-only">Loading...</span>
-                      </Spinner>
-                    ) : (
-                      <span>Submit</span>
-                    )}
-                  </button>
-                </form>
-              </div>
-            </div>
+                <div className="comment-form card my-4">
+                  <h5 className="card-header">মতামত জানান</h5>
+                  <div className="card-body">
+                    <form>
+                      <div className="form-group">
+                        {/* <input
+          className="form-control mb-2"
+          type="text"
+          placeholder="বিষয়"
+          maxLength="100"
+          value={commentForm.title}
+          onChange={(evt) =>
+            updateCommentForm({
+              ...commentForm,
+              title: evt.target.value,
+            })
+          }
+        /> */}
+                        <textarea
+                          className="form-control mb-2"
+                          rows="3"
+                          placeholder="আপনার মতামত"
+                          maxLength="500"
+                          value={commentForm.description}
+                          onChange={(evt) =>
+                            updateCommentForm({
+                              ...commentForm,
+                              description: evt.target.value,
+                            })
+                          }
+                        ></textarea>
 
-            {commentsState &&
-              commentsState.length > 0 &&
-              commentsState.map((comment) => (
-                <div className="media mb-4" key={comment._id}>
-                  <div className="mr-3 rounded-circle comment-icon">
-                    <div className="icon-day">
-                      {moment(comment.createdAt).format("DD")}
-                    </div>
-                    <div className="icon-mon">
-                      {moment(comment.createdAt).format("MMM")}
-                    </div>
-                  </div>
-                  <div className="media-body">
-                    <h5 className="mt-0">{comment.title}</h5>
-                    <blockquote>{comment.description}</blockquote>
-                    <cite> - {comment.username}</cite>
+                        <input
+                          className="form-control "
+                          type="text"
+                          placeholder="আপনার নাম"
+                          maxLength="100"
+                          value={commentForm.username}
+                          onChange={(evt) =>
+                            updateCommentForm({
+                              ...commentForm,
+                              username: evt.target.value,
+                            })
+                          }
+                        />
+                      </div>
+                      <button
+                        type="submit"
+                        className="btn"
+                        onClick={commentSubmitted}
+                        disabled={
+                          !commentForm.username || !commentForm.description
+                        }
+                      >
+                        {isLoading ? (
+                          <Spinner animation="border" role="status">
+                            <span className="sr-only">Loading...</span>
+                          </Spinner>
+                        ) : (
+                          <span>Submit</span>
+                        )}
+                      </button>
+                    </form>
                   </div>
                 </div>
-              ))}
+
+                {commentsState &&
+                  commentsState.length > 0 &&
+                  commentsState.map((comment) => (
+                    <div className="media mb-4" key={comment._id}>
+                      <div className="mr-3 rounded-circle comment-icon">
+                        <div className="icon-day">
+                          {moment(comment.createdAt).format("DD")}
+                        </div>
+                        <div className="icon-mon">
+                          {moment(comment.createdAt).format("MMM")}
+                        </div>
+                      </div>
+                      <div className="media-body">
+                        <h5 className="mt-0">{comment.title}</h5>
+                        <blockquote>{comment.description}</blockquote>
+                        <cite> - {comment.username}</cite>
+                      </div>
+                    </div>
+                  ))}
+              </Fragment>
+            )}
           </div>
         </section>
 

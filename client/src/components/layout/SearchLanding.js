@@ -25,6 +25,11 @@ const SearchLanding = (props) => {
       }
     })();
   }, [props.match.params.search]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <Fragment>
       <header id="page-header">
