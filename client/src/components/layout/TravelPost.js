@@ -162,22 +162,20 @@ const TravelPost = (props) => {
                                   ></iframe>
                                 </div>
                               </div>
-                              {section.videoDescription ? (
-                                <div className="card-footer section-image-footer">
-                                  <div class="d-flex justify-content-between">
-                                    <span>{section.videoDescription}</span>
-                                    <i
-                                      class="fa fa-expand"
-                                      aria-hidden="true"
-                                      onClick={() => {
-                                        // setCurrentImage(section.image);
-                                        setCurrentVideo(section.video);
-                                        setOpenImage(true);
-                                      }}
-                                    ></i>
-                                  </div>
+                              <div className="card-footer section-image-footer">
+                                <div class="d-flex justify-content-between">
+                                  <span>{section.videoDescription}</span>
+                                  <i
+                                    class="fa fa-expand"
+                                    aria-hidden="true"
+                                    onClick={() => {
+                                      // setCurrentImage(section.image);
+                                      setCurrentVideo(section.video);
+                                      setOpenImage(true);
+                                    }}
+                                  ></i>
                                 </div>
-                              ) : null}
+                              </div>
                             </div>
                           ) : null}
                         </div>
