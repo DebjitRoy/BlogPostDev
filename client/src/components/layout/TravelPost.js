@@ -13,6 +13,7 @@ const TravelPost = (props) => {
   const [isMainLoading, setMainLoading] = useState(false);
   const [isOpenImage, setOpenImage] = useState(false);
   const [currentImage, setCurrentImage] = useState(null);
+  const [currentVideo, setCurrentVideo] = useState(null);
 
   const [commentForm, updateCommentForm] = useState({
     title: "",
@@ -152,18 +153,29 @@ const TravelPost = (props) => {
                             </div>
                           ) : null}
                           {section.video && section.video.length ? (
-                            <div className="card col-md-8 centered">
+                            <div className="card video-card col-md-8 centered">
                               <div className="card-body section-image">
                                 <div className="embed-responsive embed-responsive-16by9">
                                   <iframe
                                     className="embed-responsive-item"
-                                    src={`https://www.youtube.com/embed/${section.video}`}
+                                    src={`https://www.youtube.com/embed/${section.video}?autoplay=1`}
                                   ></iframe>
                                 </div>
                               </div>
                               {section.videoDescription ? (
                                 <div className="card-footer section-image-footer">
-                                  {section.videoDescription}
+                                  <div class="d-flex justify-content-between">
+                                    <span>{section.videoDescription}</span>
+                                    <i
+                                      class="fa fa-expand"
+                                      aria-hidden="true"
+                                      onClick={() => {
+                                        // setCurrentImage(section.image);
+                                        setCurrentVideo(section.video);
+                                        setOpenImage(true);
+                                      }}
+                                    ></i>
+                                  </div>
                                 </div>
                               ) : null}
                             </div>
@@ -269,6 +281,7 @@ const TravelPost = (props) => {
           show={isOpenImage}
           onHide={closeImage}
           image={currentImage}
+          video={currentVideo}
         />
       </Fragment>
     )

@@ -6,10 +6,20 @@ import ModalBody from "react-bootstrap/ModalBody";
 const ImageModal = (props) => (
   <Modal {...props} show={props.show} centered size="lg">
     <ModalBody className="image-modal" onClick={props.onHide}>
-      <Image
-        src={`https://bengali-blog-static-uploads.s3.amazonaws.com/${props.image}`}
-        fluid
-      />
+      {props.image ? (
+        <Image
+          src={`https://bengali-blog-static-uploads.s3.amazonaws.com/${props.image}`}
+          fluid
+        />
+      ) : null}
+      {props.video ? (
+        <div className="embed-responsive embed-responsive-16by9">
+          <iframe
+            className="embed-responsive-item"
+            src={`https://www.youtube.com/embed/${props.video}?autoplay=1`}
+          ></iframe>
+        </div>
+      ) : null}
     </ModalBody>
   </Modal>
 );
