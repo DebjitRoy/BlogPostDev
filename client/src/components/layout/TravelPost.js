@@ -140,6 +140,7 @@ const TravelPost = (props) => {
                                   className="img-fluid"
                                   src={`https://bengali-blog-static-uploads.s3.amazonaws.com/${section.image}`}
                                   onClick={() => {
+                                    setCurrentVideo(null);
                                     setCurrentImage(section.image);
                                     setOpenImage(true);
                                   }}
@@ -169,7 +170,7 @@ const TravelPost = (props) => {
                                     class="fa fa-expand"
                                     aria-hidden="true"
                                     onClick={() => {
-                                      // setCurrentImage(section.image);
+                                      setCurrentImage(null);
                                       setCurrentVideo(section.video);
                                       setOpenImage(true);
                                     }}
