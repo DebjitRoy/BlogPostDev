@@ -1,9 +1,10 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
 import CreatePostModal from "./CreatePostModal";
 import DeleteModal from "./DeleteModal";
+import AuthContext from "./AuthContext";
 
 const AdminDashboard = () => {
   const [latestPosts, changePostData] = useState(null);
@@ -12,6 +13,8 @@ const AdminDashboard = () => {
   const [isCreateModalOpen, changeModalOpen] = useState(false);
   const [isDeleteModalOpen, changeDeleteModalOpen] = useState(false);
   const [currentPost, setCurrentPost] = useState(null);
+  const [showDashboard, setDashboardVisible] = useState(false);
+  const authCtx = useContext(AuthContext);
   const selectedCategory = {
     all: "All Posts",
     travel: "Travel Posts",
@@ -19,7 +22,13 @@ const AdminDashboard = () => {
     miscl: "Miscl Posts",
   };
   useEffect(() => {
-    getRecentPosts();
+    console.log(sessionStorage.getItem("token"));
+    if (sessionStorage.getItem("token")) {
+      setDashboardVisible(true);
+      getRecentPosts();
+    } else {
+      setDashboardVisible(false);
+    }
   }, [isCreateModalOpen]);
 
   const getRecentPosts = async () => {
@@ -74,7 +83,7 @@ const AdminDashboard = () => {
     setCurrentPost(post);
     changeDeleteModalOpen(true);
   };
-  return (
+  return showDashboard ? (
     <Fragment>
       <section id="actions" className="py-4 mb-4 bg-light">
         <div className="container">
@@ -132,16 +141,11 @@ const AdminDashboard = () => {
               </div>
             </div>
 
-            {/* <div className="col-md-3">
-              <a
-                href="#"
-                className="btn btn-warning btn-block"
-                data-toggle="modal"
-                data-target="#addUserModal"
-              >
-                <i className="fas fa-plus"></i> Add User
-              </a>
-            </div> */}
+            <div className="col-md-3">
+              <Link to="/admin" className="btn btn-warning btn-block">
+                <i className="fas fa-sign-out-alt"></i> Log Out
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -262,6 +266,8 @@ const AdminDashboard = () => {
         onPostDelete={() => deletePost()}
       />
     </Fragment>
+  ) : (
+    <h2>Please Login!</h2>
   );
 };
 

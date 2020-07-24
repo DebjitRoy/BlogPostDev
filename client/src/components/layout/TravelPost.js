@@ -40,9 +40,10 @@ const TravelPost = (props) => {
     })();
   }, [isCommentSubmitted]);
 
-  const commentSubmitted = async () => {
+  const commentSubmitted = async (evt) => {
+    evt.preventDefault();
+    setLoading(true);
     try {
-      setLoading(true);
       await axios.post(
         `/api/posts/${props.match.params.id}/comments`,
         commentForm
@@ -50,6 +51,7 @@ const TravelPost = (props) => {
       setLoading(false);
       setFormSubmitted(false);
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -166,15 +168,19 @@ const TravelPost = (props) => {
                               <div className="card-footer section-image-footer">
                                 <div class="d-flex justify-content-between">
                                   <span>{section.videoDescription}</span>
-                                  <i
-                                    class="fa fa-expand"
-                                    aria-hidden="true"
+                                  <span
                                     onClick={() => {
                                       setCurrentImage(null);
                                       setCurrentVideo(section.video);
                                       setOpenImage(true);
                                     }}
-                                  ></i>
+                                  >
+                                    expand{" "}
+                                    <i
+                                      class="fa fa-expand"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </span>
                                 </div>
                               </div>
                             </div>
