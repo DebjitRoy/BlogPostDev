@@ -586,3 +586,18 @@ body {
 .video-card i {
   cursor: pointer;
 }
+
+.register {
+  text-align: right;
+}
+
+.ok {
+  color: green;
+}
+.error {
+  color: red;
+}
+.disabled-link {
+  pointer-events: none;
+  filter: brightness(85%);
+}

@@ -1,41 +1,107 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 
-const LoginPage = () => (
-  <Fragment>
-    <section id="login">
-      <div className="container login-container">
-        <div className="row">
-          <div className="col-md-6 mx-auto">
-            <div className="card">
-              <div className="card-header">
-                <h4>Account Login</h4>
-                <div className="card-body">
-                  <form>
-                    <div className="form-group">
-                      <label htmlFor="email">Email</label>
-                      <input type="text" className="form-control" />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="password">Password</label>
-                      <input type="password" className="form-control" />
-                    </div>
-                    <Link
-                      to={`/admin/dashboard`}
-                      className="btn btn-primary btn-block"
-                    >
-                      LOGIN
-                    </Link>
-                  </form>
+const LoginPage = () => {
+  const [loginForm, updateLoginForm] = useState({
+    email: "",
+    password: "",
+  });
+  const [isUserLogin, setUserLogin] = useState(false);
+  const [isLoginFailed, setLoginFailed] = useState(false);
+  const history = useHistory();
+
+  const onSubmitLogin = async (evt) => {
+    evt.preventDefault();
+    try {
+      const res = await axios.post("/api/auth/login", loginForm);
+      if (res && res.data.token) {
+        setLoginFailed(false);
+        setUserLogin(true);
+        history.push("/admin/dashboard");
+      } else {
+        setLoginFailed(true);
+        setUserLogin(false);
+      }
+      updateLoginForm({
+        email: "",
+        password: "",
+      });
+    } catch (err) {
+      console.log(err.message);
+      setLoginFailed(true);
+      updateLoginForm({
+        email: "",
+        password: "",
+      });
+      setUserLogin(false);
+    }
+  };
+  return (
+    <Fragment>
+      <section id="login">
+        <div className="container login-container">
+          <div className="row">
+            <div className="col-md-6 centered">
+              <div className="card">
+                <div className="card-header">
+                  <h4>Account Login</h4>
+                  {isLoginFailed ? (
+                    <span className="error">
+                      Login Failed! Please try again
+                    </span>
+                  ) : null}
+                  <div className="card-body">
+                    <form>
+                      <div className="form-group">
+                        <label htmlFor="email">Email</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          value={loginForm.email}
+                          onChange={(evt) =>
+                            updateLoginForm({
+                              ...loginForm,
+                              email: evt.target.value,
+                            })
+                          }
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="password">Password</label>
+                        <input
+                          type="password"
+                          className="form-control"
+                          value={loginForm.password}
+                          onChange={(evt) =>
+                            updateLoginForm({
+                              ...loginForm,
+                              password: evt.target.value,
+                            })
+                          }
+                        />
+                      </div>
+                      <button
+                        // to={`/admin/dashboard`}
+                        className="btn btn-primary btn-block"
+                        disabled={!loginForm.email || !loginForm.password}
+                        onClick={onSubmitLogin}
+                      >
+                        LOGIN
+                      </button>
+                      <div className="register my-2">
+                        New User? <Link to={`/admin/register`}>Register</Link>
+                      </div>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-  </Fragment>
-);
+      </section>
+    </Fragment>
+  );
+};
 
 export default LoginPage;

@@ -6,7 +6,7 @@ const Navbar = () => {
   const [isNavExpanded, changeExpanded] = useState(false);
 
   return (
-    <nav className="navbar navbar-expand-sm navbar-dark bg-dark navbar-main">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark navbar-main">
       <div className="container">
         <Link
           to="/"

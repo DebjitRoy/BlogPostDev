@@ -11,6 +11,7 @@ import TravelPost from "./components/layout/TravelPost";
 import PostForm from "./components/layout/PostForm";
 import CreatePostForm from "./admin/CreatePost";
 import LoginPage from "./admin/Login";
+import RegisterPage from "./admin/Register";
 import AdminNavbar from "./admin/AdminNavbar";
 import AdminDashboard from "./admin/Dashboard";
 import TravelPostEdit from "./admin/TravelPostEdit";
@@ -42,6 +43,7 @@ const App = () => (
         <Route exact path="/admin" component={LoginPage} />
         <Route exact path="/admin/createpost" component={CreatePostForm} />
         <Route exact path="/admin/login" component={LoginPage} />
+        <Route exact path="/admin/register" component={RegisterPage} />
         <Route exact path="/admin/dashboard" component={AdminDashboard} />
         <Route exact path="/admin/postedit/:id" component={TravelPostEdit} />
       </Switch>
