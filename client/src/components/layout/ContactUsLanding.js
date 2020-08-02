@@ -8,7 +8,7 @@ const ContactUsLanding = () => {
         <div className="container">
           <div className="row">
             <div className="col-md-6 m-auto text-center">
-              <h1>যোগাযোগ</h1>
+              <h1>পরিচিতি</h1>
             </div>
           </div>
         </div>
