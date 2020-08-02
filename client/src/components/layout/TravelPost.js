@@ -42,6 +42,12 @@ const TravelPost = (props) => {
 
   const commentSubmitted = async (evt) => {
     evt.preventDefault();
+    updateCommentForm({
+      title: "",
+      description: "",
+      username: "",
+    });
+    setFormSubmitted(true);
     setLoading(true);
     try {
       await axios.post(
@@ -78,7 +84,9 @@ const TravelPost = (props) => {
               </div>
             ) : (
               <Fragment>
-                <h1 className="mt-4 mb-3">{postState.data.title}</h1>
+                <h1 className="mt-4 mb-3 centered-container">
+                  {postState.data.title}
+                </h1>
 
                 <div className="row">
                   <div className="col-lg-8 centered">
@@ -161,14 +169,17 @@ const TravelPost = (props) => {
                                 <div className="embed-responsive embed-responsive-16by9">
                                   <iframe
                                     className="embed-responsive-item"
-                                    src={`https://www.youtube.com/embed/${section.video}?autoplay=1`}
+                                    src={`https://www.youtube.com/embed/${section.video}`}
+                                    allowfullscreen="true"
+                                    allowscriptaccess="always"
+                                    frameborder="0"
                                   ></iframe>
                                 </div>
                               </div>
                               <div className="card-footer section-image-footer">
                                 <div class="d-flex justify-content-between">
                                   <span>{section.videoDescription}</span>
-                                  <span
+                                  {/* <span
                                     onClick={() => {
                                       setCurrentImage(null);
                                       setCurrentVideo(section.video);
@@ -180,7 +191,7 @@ const TravelPost = (props) => {
                                       class="fa fa-expand"
                                       aria-hidden="true"
                                     ></i>
-                                  </span>
+                                  </span> */}
                                 </div>
                               </div>
                             </div>

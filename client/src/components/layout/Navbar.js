@@ -96,7 +96,7 @@ const Navbar = () => {
               onClick={() => changeExpanded(!isNavExpanded)}
             >
               <NavLink to="/contactus" className="nav-link">
-                যোগাযোগ
+                পরিচিতি
               </NavLink>
               {/* <a href="contact.html" className="nav-link">
                 যোগাযোগ

@@ -9,7 +9,7 @@ const TravelItem = ({ data, postType }) => (
     <div className="timeline-body">
       <div className="row">
         <div className="col-lg-6">
-          <a href="#">
+          <a>
             <img
               className="img-fluid rounded"
               src={`https://bengali-blog-static-uploads.s3.amazonaws.com/${data.photoHero}`}
