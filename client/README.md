@@ -1,5 +1,15 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Deoploy to Heroku
+
+heroku project
+https://dashboard.heroku.com/apps/majestic-olympic-82789
+
+$ git add .
+$ git commit -am "make it better"
+$ git push origin master
+$ git push heroku master
+
 ## Available Scripts
 
 In the project directory, you can run:

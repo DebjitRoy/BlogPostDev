@@ -15,7 +15,7 @@ const TravelLanding = () => {
       try {
         setLoading(true);
         const res = await axios.get(
-          `/api/posts?postType=travel&limit=5&page=${currentPage}&select=title,gist,photoHero,createdAt`
+          `/api/posts?postType=travel&limit=20&page=${currentPage}&select=title,gist,photoHero,createdAt`
         );
         changeTravelListState(res.data.data);
         changePaginationState(res.data.pagination);

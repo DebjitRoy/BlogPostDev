@@ -16,7 +16,7 @@ const BooksLanding = () => {
       try {
         setLoading(true);
         const res = await axios.get(
-          `/api/posts?postType=books&limit=5&page=${currentPage}&select=title,gist,photoHero,createdAt`
+          `/api/posts?postType=books&limit=20&page=${currentPage}&select=title,gist,photoHero,createdAt`
         );
         changeBookListState(res.data.data);
         changePaginationState(res.data.pagination);
