@@ -109,7 +109,7 @@ const Landing = () => {
             <div className="col-md-3 mb-4 text-center">
               <div className="menu-card">
                 <div className="box">
-                  <Link className="menu-tile" to="/miscl">
+                  <Link className="menu-tile" to="/guest">
                     <div>
                       <FontAwesomeIcon icon={faUsers} className="fa-3x mb-2" />
                     </div>
