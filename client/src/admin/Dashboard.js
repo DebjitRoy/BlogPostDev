@@ -20,6 +20,7 @@ const AdminDashboard = () => {
     travel: "Travel Posts",
     books: "Books Posts",
     miscl: "Miscl Posts",
+    guest: "Guest Posts",
   };
   useEffect(() => {
     console.log(sessionStorage.getItem("token"));
@@ -39,13 +40,20 @@ const AdminDashboard = () => {
       changePostData(res.data.data);
 
       const countVal = await axios.get("/api/posts/count");
-      const { count, travelcount, bookcount, misclcount } = countVal.data;
+      const {
+        count,
+        travelcount,
+        bookcount,
+        misclcount,
+        guestcount,
+      } = countVal.data;
       // console.log(countVal);
       changeCounts({
         count,
         travelcount,
         bookcount,
         misclcount,
+        guestcount,
       });
     } catch (error) {
       console.log(error);
@@ -138,6 +146,14 @@ const AdminDashboard = () => {
                 >
                   <i className="fab fa-affiliatetheme"></i> Miscl
                 </a>
+                <a
+                  className="dropdown-item"
+                  onClick={() => {
+                    postTypeSelected("guest");
+                  }}
+                >
+                  <i className="fa fa-users"></i> Guest
+                </a>
               </div>
             </div>
 
@@ -226,6 +242,10 @@ const AdminDashboard = () => {
                     <h6 className="display-4">
                       <i className="fab fa-affiliatetheme"></i>{" "}
                       {countData.misclcount || 0}
+                    </h6>
+                    <h6 className="display-4">
+                      <i className="fa fa-users"></i>{" "}
+                      {countData.guestcount || 0}
                     </h6>
                     {/* <a
                     href="categories.html"

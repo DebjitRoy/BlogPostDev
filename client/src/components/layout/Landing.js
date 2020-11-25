@@ -7,6 +7,7 @@ import {
   faPenNib,
   faMountain,
   faBook,
+  faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 
 const Landing = () => {
@@ -41,30 +42,7 @@ const Landing = () => {
       <section id="home-icons" className="py-5">
         <div className="container">
           <div className="row">
-            {/* <div className="col-md-4 mb-4 text-center">
-              <Link className="menu-tile" to="/travel">
-                <FontAwesomeIcon icon={faMountain} className="fa-3x mb-2" />
-                <h3>ভ্রমণিকা</h3>
-                <p>ভ্রমণ সংকলন। কাছে দূরে, দেশে বিদেশে, নানান অভিজ্ঞতা।</p>
-              </Link>
-            </div>
-            <div className="col-md-4 mb-4 text-center">
-              <Link className="menu-tile" to="/books">
-                <FontAwesomeIcon icon={faBook} className="fa-3x mb-2" />
-                <h3>মনের আনন্দ</h3>
-                <p>বই পড়া, গান শোনা, সিনেমা দেখা, আর আড্ডার সাথে ধর্মচর্চাও।</p>
-              </Link>
-            </div>
-            <div className="col-md-4 mb-4 text-center">
-              <Link className="menu-tile" to="/miscl">
-                <FontAwesomeIcon icon={faPenNib} className="fa-3x mb-2" />
-                <h3>টুকিটাকি</h3>
-                <p>
-                  সব রকম চিন্তা ভাবনা, ভালো লাগা, মন্দ লাগা; যা কিছু মনে আসে।
-                </p>
-              </Link>
-            </div> */}
-            <div className="col-md-4 mb-4 text-center">
+            <div className="col-md-3 mb-4 text-center">
               <div className="menu-card ">
                 <div className="box">
                   <Link className="menu-tile" to="/travel">
@@ -85,7 +63,7 @@ const Landing = () => {
               </div>
             </div>
 
-            <div className="col-md-4 mb-4 text-center">
+            <div className="col-md-3 mb-4 text-center">
               <div className="menu-card ">
                 <div className="box">
                   <Link className="menu-tile" to="/books">
@@ -106,7 +84,7 @@ const Landing = () => {
               </div>
             </div>
 
-            <div className="col-md-4 mb-4 text-center">
+            <div className="col-md-3 mb-4 text-center">
               <div className="menu-card">
                 <div className="box">
                   <Link className="menu-tile" to="/miscl">
@@ -123,6 +101,24 @@ const Landing = () => {
                       সব রকম চিন্তা ভাবনা, ভালো লাগা, মন্দ লাগা; যা কিছু মনে
                       আসে।
                     </p>
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-md-3 mb-4 text-center">
+              <div className="menu-card">
+                <div className="box">
+                  <Link className="menu-tile" to="/miscl">
+                    <div>
+                      <FontAwesomeIcon icon={faUsers} className="fa-3x mb-2" />
+                    </div>
+                    <h2>
+                      অতিথির কলম
+                      <br />
+                      <span>পড়ুন</span>
+                    </h2>
+                    <p> এই কলমটি আপনার। আপনাদের কিছু বাছাই করা লেখার সংকলন</p>
                   </Link>
                 </div>
               </div>

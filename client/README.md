@@ -10,6 +10,11 @@ $ git commit -am "make it better"
 $ git push origin master
 $ git push heroku master
 
+## Dev Admin Login
+
+debjitroy.dev@gmail.com
+wi----23
+
 ## Available Scripts
 
 In the project directory, you can run:

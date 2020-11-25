@@ -9,11 +9,12 @@ import ModalFooter from "react-bootstrap/ModalFooter";
 import ModalTitle from "react-bootstrap/ModalTitle";
 
 const CreatePostModal = ({ isOpen, closeModal }) => {
-  const postCategories = ["travel", "books", "miscl"];
+  const postCategories = ["travel", "books", "miscl", "guest"];
   const postType = {
     travel: "Travel",
     books: "Books",
     miscl: "Miscl",
+    guest: "Guest",
   };
   const initialFormState = {
     title: "",

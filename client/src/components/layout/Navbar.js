@@ -7,7 +7,7 @@ const Navbar = () => {
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark navbar-main">
-      <div className="container">
+      <div className="container-fluid">
         <Link
           to="/"
           className="navbar-brand"
@@ -65,7 +65,7 @@ const Navbar = () => {
               data-target="#navbarCollapse"
               onClick={() => changeExpanded(!isNavExpanded)}
             >
-              <NavLink to="/travel" className="nav-link">
+              <NavLink to="/travel" className="nav-link" disabled>
                 ভ্রমণিকা
               </NavLink>
             </li>
@@ -95,12 +95,19 @@ const Navbar = () => {
               data-target="#navbarCollapse"
               onClick={() => changeExpanded(!isNavExpanded)}
             >
+              <NavLink to="/guest" className="nav-link">
+                অতিথি কলম
+              </NavLink>
+            </li>
+            <li
+              className="nav-item"
+              data-toggle="collapse"
+              data-target="#navbarCollapse"
+              onClick={() => changeExpanded(!isNavExpanded)}
+            >
               <NavLink to="/contactus" className="nav-link">
                 পরিচিতি
               </NavLink>
-              {/* <a href="contact.html" className="nav-link">
-                যোগাযোগ
-              </a> */}
             </li>
           </ul>
         </div>

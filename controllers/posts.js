@@ -84,12 +84,14 @@ module.exports.getPostsCount = async (req, res) => {
     const travelPost = await Post.find({ postType: "travel" });
     const booksPost = await Post.find({ postType: "books" });
     const misclPost = await Post.find({ postType: "miscl" });
+    const guestPost = await Post.find({ postType: "guest" });
     res.status(200).json({
       success: true,
       count: posts.length,
       travelcount: travelPost.length,
       bookcount: booksPost.length,
       misclcount: misclPost.length,
+      guestcount: guestPost.length,
     });
   } catch (err) {
     res.status(400).json({ success: false });

@@ -11,7 +11,7 @@ const PostSchema = new mongoose.Schema({
   },
   postType: {
     type: String,
-    enum: ["travel", "books", "miscl"],
+    enum: ["travel", "books", "miscl", "guest"],
     required: [true, "Please add a Post Type"],
   },
   gist: {

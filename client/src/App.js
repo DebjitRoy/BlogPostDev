@@ -7,6 +7,7 @@ import Footer from "./components/layout/Footer";
 import TravelLanding from "./components/layout/TravelLanding";
 import BooksLanding from "./components/layout/BooksLanding";
 import MisclLanding from "./components/layout/MisclLanding";
+import GuestLanding from "./components/layout/GuestLanding";
 import TravelPost from "./components/layout/TravelPost";
 import PostForm from "./components/layout/PostForm";
 import CreatePostForm from "./admin/CreatePost";
@@ -34,6 +35,7 @@ const App = () => (
 
         <Route exact path="/books" component={BooksLanding} />
         <Route exact path="/miscl" component={MisclLanding} />
+        <Route exact path="/guest" component={GuestLanding} />
         <Route exact path="/contactus" component={ContactUsLanding} />
         <Route exact path="/search/:search" component={SearchLanding} />
         {/* <Route exact path="/books/:id" component={TravelPost} /> */}
