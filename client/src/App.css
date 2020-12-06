@@ -601,3 +601,8 @@ body {
   pointer-events: none;
   filter: brightness(85%);
 }
+.section-content-pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  text-align: justify;
+}

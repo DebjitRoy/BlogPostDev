@@ -65,6 +65,10 @@ const TravelPost = (props) => {
   const closeImage = () => {
     setOpenImage(false);
   };
+  
+  const isPreFormated = () => moment(postState.data.createdAt).isAfter(moment("2020-12-05"))
+    
+  
 
   return (
     postState && (
@@ -141,7 +145,7 @@ const TravelPost = (props) => {
                           <p className="lead">
                             <b>{section.header}</b>
                           </p>
-                          <p>{section.content}</p>
+                          <p className={isPreFormated() ? "section-content-pre" : "section-content"}>{section.content}</p>
                           {section.image ? (
                             <div className="card col-md-8 centered">
                               <div className="card-body section-image">
