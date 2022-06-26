@@ -8,6 +8,7 @@ import {
   faMountain,
   faBook,
   faUsers,
+  faDharmachakra,
 } from "@fortawesome/free-solid-svg-icons";
 
 const Landing = () => {
@@ -41,6 +42,23 @@ const Landing = () => {
 
       <section id="home-icons" className="py-5">
         <div className="container">
+          <div className="row">
+            <div className="col-md-12 mb-2 text-center">
+              <div className="card-small pt-2">
+                <div className="box">
+                  <Link className="menu-tile" to="/index">
+                    <div>
+                      <FontAwesomeIcon
+                        icon={faDharmachakra}
+                        className="fa-2x mb-2"
+                      />
+                    </div>
+                    <span>সূচিপত্র</span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
           <div className="row">
             <div className="col-md-3 mb-4 text-center">
               <div className="menu-card ">

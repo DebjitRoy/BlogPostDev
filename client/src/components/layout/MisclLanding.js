@@ -15,7 +15,7 @@ const MisclLanding = () => {
       try {
         setLoading(true);
         const res = await axios.get(
-          `/api/posts?postType=miscl&limit=20&page=${currentPage}&select=title,gist,photoHero,createdAt`
+          `/api/posts?postType=miscl&limit=100&page=${currentPage}&select=title,gist,photoHero,createdAt`
         );
         changeMisclListState(res.data.data);
         changePaginationState(res.data.pagination);

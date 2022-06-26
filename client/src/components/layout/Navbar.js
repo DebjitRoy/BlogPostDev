@@ -55,6 +55,16 @@ const Navbar = () => {
               data-target="#navbarCollapse"
               onClick={() => changeExpanded(!isNavExpanded)}
             >
+              <NavLink exact={true} to="/index" className="nav-link">
+                সূচিপত্র
+              </NavLink>
+            </li>
+            <li
+              className="nav-item"
+              data-toggle="collapse"
+              data-target="#navbarCollapse"
+              onClick={() => changeExpanded(!isNavExpanded)}
+            >
               <NavLink exact={true} to="/" className="nav-link">
                 প্রধান পাতা
               </NavLink>

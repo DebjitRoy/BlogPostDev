@@ -5,6 +5,7 @@ import Navbar from "./components/layout/Navbar";
 import Landing from "./components/layout/Landing";
 import Footer from "./components/layout/Footer";
 import TravelLanding from "./components/layout/TravelLanding";
+import IndexLanding from "./components/layout/indexLanding";
 import BooksLanding from "./components/layout/BooksLanding";
 import MisclLanding from "./components/layout/MisclLanding";
 import GuestLanding from "./components/layout/GuestLanding";
@@ -29,6 +30,7 @@ const App = () => (
       <Route exact path="/" component={Landing} />
       <Switch>
         <Route exact path="/travel" component={TravelLanding} />
+        <Route exact path="/index" component={IndexLanding} />
         <Route exact path="/travel/:id" component={TravelPost} />
         <Route exact path="/books/:id" component={TravelPost} />
         <Route exact path="/miscl/:id" component={TravelPost} />

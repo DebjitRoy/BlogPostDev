@@ -15,7 +15,7 @@ const GuestLanding = () => {
       try {
         setLoading(true);
         const res = await axios.get(
-          `/api/posts?postType=guest&limit=20&page=${currentPage}&select=title,gist,photoHero,createdAt`
+          `/api/posts?postType=guest&limit=100&page=${currentPage}&select=title,gist,photoHero,createdAt`
         );
         changeGuestListState(res.data.data);
         changePaginationState(res.data.pagination);
@@ -46,8 +46,14 @@ const GuestLanding = () => {
           <div className="row">
             <div className="col-md-8">
               <p>আমার বাতায়নের আঙিনায় অতিথিদের স্বাগতম।</p>
-              <p>তাঁদের সৃষ্টির স্বাদ আমার পাঠকদের সাথে ভাগ করে নিতে এই বিভাগটি চালু করা হলো। যেসব বন্ধু এখানে তাঁদের লেখা পাঠাতে চান, .docx ফরম্যাটে অনধিক ৫০০ শব্দের মধ্যে লেখা, সঙ্গে একটি কভার ফটো (৩০০ kb max) আমার ইমেইল ঠিকানায় (juthika.ray.JR@gmail.com) পাঠাতে পারেন। দয়া করে মনে রাখবেন, pdf ফরম্যাট চলবেনা, একমাত্র docx ফরম্যাটেই পাঠাতে হবে।</p>
-              
+              <p>
+                তাঁদের সৃষ্টির স্বাদ আমার পাঠকদের সাথে ভাগ করে নিতে এই বিভাগটি
+                চালু করা হলো। যেসব বন্ধু এখানে তাঁদের লেখা পাঠাতে চান, .docx
+                ফরম্যাটে অনধিক ৫০০ শব্দের মধ্যে লেখা, সঙ্গে একটি কভার ফটো (৩০০
+                kb max) আমার ইমেইল ঠিকানায় (juthika.ray.JR@gmail.com) পাঠাতে
+                পারেন। দয়া করে মনে রাখবেন, pdf ফরম্যাট চলবেনা, একমাত্র docx
+                ফরম্যাটেই পাঠাতে হবে।
+              </p>
             </div>
             <div className="col-md-4">
               <img
