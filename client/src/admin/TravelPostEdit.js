@@ -25,7 +25,6 @@ const TravelPostEdit = (props) => {
   const loadPostData = async () => {
     try {
       const res = await axios.get(`/api/posts/${props.match.params.id}`);
-      // console.log(res.data);
       changePostState(res.data);
       if (res.data) {
         changeFormState(res.data.data);
@@ -205,8 +204,8 @@ const TravelPostEdit = (props) => {
     setAddSection(false);
   };
 
-
-  const isPreFormated = () => moment(postState.data.createdAt).isAfter(moment("2020-12-05"))
+  const isPreFormated = () =>
+    moment(postState.data.createdAt).isAfter(moment("2020-12-05"));
 
   const onEditSubmit = async () => {
     console.log(`submitting ${editingState}`);
@@ -547,7 +546,13 @@ const TravelPostEdit = (props) => {
                           <p className="lead">
                             <b>{section.header}</b>
                           </p>
-                          <p className={isPreFormated() ? "section-content-pre" : "section-content"}>
+                          <p
+                            className={
+                              isPreFormated()
+                                ? "section-content-pre"
+                                : "section-content"
+                            }
+                          >
                             {section.content}
                           </p>
                           {section.video ? (
